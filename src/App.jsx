@@ -17,6 +17,8 @@ const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
 const CategoryResults = lazy(() => import('./pages/user/CategoryResults'));
 const CategoryDetails = lazy(() => import('./pages/user/CategoryDetails'));
 const Profile = lazy(() => import('./pages/user/Profile'));
+const Auth = lazy(() => import('./pages/user/Auth'));
+const Cart = lazy(() => import('./pages/user/Cart'));
 
 const AppContent = () => {
   const location = useLocation();
@@ -44,7 +46,11 @@ const AppContent = () => {
           <Route path="/vendor/:id" element={<div className="p-20 text-center">Vendor Details Page Coming Soon</div>} />
           <Route path="/services" element={<SocialFeed />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:activeTab" element={<Profile />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/my-requests" element={<div className="p-20 text-center">My Requests Page Coming Soon</div>} />
+          <Route path="/login" element={<Auth />} />
+          <Route path="/signup" element={<Auth />} />
 
           {/* Vendor/Admin Routes */}
           <Route path="/vendor-panel" element={<VendorDashboard />} />

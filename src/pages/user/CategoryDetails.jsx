@@ -25,7 +25,7 @@ import { cn } from '../../utils/cn';
 import { storage } from '../../utils/storage';
 import BookingModal from '../../components/user/BookingModal';
 import { CATEGORIES_DATA } from '../../data/categoriesData';
-import BestDealModal from '../../components/common/BestDealModal';
+import EnquiryModal from '../../components/common/EnquiryModal';
 import hotelVideo from '../../assets/hotel.mp4';
 
 const CategoryDetails = () => {
@@ -46,17 +46,6 @@ const CategoryDetails = () => {
   const scrollRef = useRef(null);
   const mobileContainerRef = useRef(null);
 
-  // Refs for each section for the mobile continuous scroll
-  const sectionRefs = {
-    'Overview': useRef(null),
-    'Services': useRef(null),
-    'Quick Info': useRef(null),
-    'Photos': useRef(null),
-    'Reviews': useRef(null),
-    'Direction': useRef(null),
-    'Explore': useRef(null)
-  };
-
   // Data fetching logic
   const normalizedCategory = categoryName?.toLowerCase();
   const categoryList = CATEGORIES_DATA[normalizedCategory] || CATEGORIES_DATA.default;
@@ -71,6 +60,39 @@ const CategoryDetails = () => {
       }
       return img;
     }) || [{ url: rawItem.image, category: 'All' }]
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('sc_open_booking_modal') === 'true') {
+      localStorage.removeItem('sc_open_booking_modal');
+      if (item.actionType === 'shopping') {
+        setBookingType('shopping');
+        setIsBookingModalOpen(true);
+      }
+    }
+  }, [item]);
+
+  const handleBookNow = () => {
+    const userStr = localStorage.getItem('currentUser');
+    if (!userStr) {
+      localStorage.setItem('sc_redirect_after_login', window.location.pathname);
+      localStorage.setItem('sc_open_booking_modal', 'true');
+      navigate('/login');
+    } else {
+      setBookingType(item.actionType || 'booking');
+      setIsBookingModalOpen(true);
+    }
+  };
+
+  // Refs for each section for the mobile continuous scroll
+  const sectionRefs = {
+    'Overview': useRef(null),
+    'Services': useRef(null),
+    'Quick Info': useRef(null),
+    'Photos': useRef(null),
+    'Reviews': useRef(null),
+    'Direction': useRef(null),
+    'Explore': useRef(null)
   };
   
   const displayCategory = categoryName ? categoryName.charAt(0).toUpperCase() + categoryName.slice(1) : 'Service';
@@ -408,9 +430,17 @@ const CategoryDetails = () => {
                   <button className="bg-[#008a00] text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg shadow-green-500/10 active:scale-95 transition-all">
                     <Phone size={18} fill="currentColor" /> {item.phone}
                   </button>
-                    <button onClick={() => setIsBestDealModalOpen(true)} className="bg-[#20594e] text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg shadow-[#20594e]/10 active:scale-95 transition-all">
-                      <Zap size={18} fill="currentColor" /> Enquire Now
+                  {item.actionType === 'shopping' && (
+                    <button 
+                      onClick={handleBookNow} 
+                      className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg shadow-amber-500/10 active:scale-95 transition-all"
+                    >
+                      <Zap size={18} fill="currentColor" /> Shop Now
                     </button>
+                  )}
+                  <button onClick={() => setIsBestDealModalOpen(true)} className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg active:scale-95 transition-all">
+                    Enquire Now
+                  </button>
                   <button className="bg-white border border-slate-200 text-slate-700 px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px]">
                     <div className="text-[#25d366]"><MessageSquare size={20} fill="currentColor" /></div> WhatsApp
                   </button>
@@ -454,11 +484,22 @@ const CategoryDetails = () => {
             {/* Sidebar (Desktop) */}
             <div className="hidden lg:block lg:col-span-1">
               <Card className="p-8 sticky top-24 border-slate-200 shadow-xl shadow-slate-900/5 bg-white/50 backdrop-blur-md">
+                 {item.actionType === 'shopping' && (
+                   <>
+                     <button 
+                        onClick={handleBookNow}
+                        className="w-full text-white font-extrabold py-4 rounded-xl active:scale-95 transition-all text-sm uppercase shadow-lg mb-6 bg-amber-500 hover:bg-amber-600 shadow-amber-500/20"
+                     >
+                        Shop Now
+                     </button>
+                     <div className="h-[1px] bg-slate-200/60 mb-6"></div>
+                   </>
+                 )}
                  <h4 className="text-xl font-bold text-slate-900 mb-6 font-display">Get Fast Quotes</h4>
                  <div className="space-y-6">
                     <input type="text" placeholder="Your Name" className="w-full px-4 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold outline-none focus:bg-white focus:border-[#20594e] transition-all" />
                     <input type="text" placeholder="Mobile Number" className="w-full px-4 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold outline-none focus:bg-white focus:border-[#20594e] transition-all" />
-                    <button className="w-full bg-[#20594e] text-white font-extrabold py-4 rounded-xl shadow-lg active:scale-95 transition-all text-sm uppercase">Submit Enquiry</button>
+                    <button onClick={() => setIsBestDealModalOpen(true)} className="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-4 rounded-xl shadow-lg active:scale-95 transition-all text-sm uppercase">Submit Inquiry</button>
                  </div>
               </Card>
             </div>
@@ -471,18 +512,14 @@ const CategoryDetails = () => {
           <button className="flex-1 bg-white border-2 border-slate-100 text-slate-900 py-3.5 rounded-[20px] font-black text-[12px] active:scale-95 transition-all shadow-xl shadow-slate-200">
              Call Now
           </button>
-          <button 
-            onClick={() => {
-              setBookingType(item.actionType || 'booking');
-              setIsBookingModalOpen(true);
-            }} 
-            className={cn(
-              "flex-1 text-white py-3.5 rounded-[20px] font-black text-[12px] active:scale-95 transition-all shadow-xl",
-              item.actionType === 'shopping' ? "bg-amber-500 shadow-amber-500/20" : "bg-[#20594e] shadow-[#20594e]/20"
-            )}
-          >
-             {item.actionType === 'shopping' ? 'Shop Now' : 'Book Now'}
-          </button>
+          {item.actionType === 'shopping' && (
+            <button 
+              onClick={handleBookNow} 
+              className="flex-1 text-white py-3.5 rounded-[20px] font-black text-[12px] active:scale-95 transition-all shadow-xl bg-amber-500 shadow-amber-500/20"
+            >
+               Shop Now
+            </button>
+          )}
           <button onClick={() => setIsBestDealModalOpen(true)} className="flex-1 bg-slate-900 text-white py-3.5 rounded-[20px] font-black text-[12px] active:scale-95 transition-all shadow-xl shadow-slate-900/20">
              Enquire Now
           </button>
@@ -494,7 +531,12 @@ const CategoryDetails = () => {
          item={item} 
          type={bookingType}
        />
-       <BestDealModal isOpen={isBestDealModalOpen} onClose={() => setIsBestDealModalOpen(false)} itemName={item.name} />
+       <EnquiryModal
+         isOpen={isBestDealModalOpen}
+         onClose={() => setIsBestDealModalOpen(false)}
+         itemName={item?.name || 'this service'}
+         type="service"
+       />
     </UserLayout>
   );
 

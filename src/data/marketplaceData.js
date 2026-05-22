@@ -120,10 +120,10 @@ export const FREQUENTLY_SEARCHED = [
 ];
 
 export const TOP_DEALS = [
-  { id: 'td1', name: 'Cat Ear Headphones', price: '₹187.91', old: '₹226.99', moq: '1', image: 'https://images.pexels.com/photos/3394651/pexels-photo-3394651.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'td2', name: 'Floral Dresses', price: '₹240.90', old: '₹299.00', moq: '50', image: 'https://images.pexels.com/photos/1755428/pexels-photo-1755428.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'td3', name: 'Smart Scooters', price: '₹21,777.23', old: '₹25,000', moq: '1', image: 'https://images.pexels.com/photos/3671151/pexels-photo-3671151.jpeg?auto=compress&cs=tinysrgb&w=600' },
-  { id: 'td4', name: 'Tableau License', price: '₹770.88', old: '₹999.00', moq: '1', image: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'td1', name: 'Premium Wireless Headphones', price: '₹187.91', old: '₹226.99', moq: '1', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=400', images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=600'] },
+  { id: 'td2', name: 'Designer Gold Necklace Set', price: '₹240.90', old: '₹299.00', moq: '50', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=400', images: ['https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=600'] },
+  { id: 'td3', name: 'Luxury Smart Watch', price: '₹21,777.23', old: '₹25,000', moq: '1', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=400', images: ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&q=80&w=600'] },
+  { id: 'td4', name: 'Premium Leather Handbag', price: '₹770.88', old: '₹999.00', moq: '1', image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=400', images: ['https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1566150905458-1bf1fc15aae9?auto=format&fit=crop&q=80&w=600'] },
 ];
 
 export const PRODUCT_BANNERS = [
@@ -142,20 +142,44 @@ export const TOP_RANKED_CATEGORIES = [
 ];
 
 export const PRODUCT_LIST_TABS = [
-  'All', 'Metals & Alloys', 'Renewable Energy', 'Consumer Electronics', 'Home Appliances', 'Food & Beverage', 'Sports & Entertainment', 'School & Office Supplies'
+  'All', 'Fashion & Apparel', 'Jewelry & Accessories', 'Beauty & Personal Care', 'Electronics & Gadgets', 'Home & Kitchen', 'Food & Beverage'
 ];
 
 export const FULL_PRODUCT_LIST = [
-  { id: 'fp1', name: 'Lowest Price Matson Sea Cargo Service Door to Door China to USA', price: '₹120.45', moq: '1', badge: 'Lower priced than similar', image: 'https://images.pexels.com/photos/2144903/pexels-photo-2144903.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp2', name: 'Coolstyle Jewelry Wholesale 8mm Gunmetal Tungsten Ring Men', price: '₹1,011.78', moq: '2', sold: '390+ sold', image: 'https://images.pexels.com/photos/94843/pexels-photo-94843.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp3', name: '100g 300m Wholesale Fancy 5ply 100% Cotton Yarn 3mm+6mm', price: '₹259.21', moq: '10', rating: '5.0', image: 'https://images.pexels.com/photos/3912981/pexels-photo-3912981.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp4', name: 'High Quality Engraved Gold Brand logo Custom Clothes Metal Dome', price: '₹53.00', moq: '100', delivery: 'Delivery by 04 Jun', image: 'https://images.pexels.com/photos/2566573/pexels-photo-2566573.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp5', name: 'Custom Logo Mini 10000mAh Magnetic Wireless Solar Energy', price: '₹1,108.14', moq: '50', badge: 'Lower priced than similar', image: 'https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp6', name: 'Fashion Smart Battery Case for iPhone 15 14 Plus 13 12 Mini 12 Pro', price: '₹1,146.68', moq: '1', rating: '5.0', image: 'https://images.pexels.com/photos/1040160/pexels-photo-1040160.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp7', name: 'Custom Journal High-End Flower PET Tape With Shell Holographic', price: '₹64.57', moq: '50', sold: '180+ sold', image: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp8', name: 'Compatible Drum Cleaning Blade for Konica Minolta Bizhub C224 C284', price: '₹221.63', moq: '1', sold: '10+ sold', image: 'https://images.pexels.com/photos/190574/pexels-photo-190574.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp9', name: 'Tokol Inked Nylon Ribbon 12.7mmx920M Black/Purple Ink', price: '₹1,985.01', moq: '10', sold: '520+ sold', image: 'https://images.pexels.com/photos/3394651/pexels-photo-3394651.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'fp10', name: 'Indian Trendy Fashion for Women Long Heavy Net Anarkali', price: '₹3,432.33', moq: '1', image: 'https://images.pexels.com/photos/1755428/pexels-photo-1755428.jpeg?auto=compress&cs=tinysrgb&w=600' },
+  // Fashion & Apparel
+  { id: 'fp3', name: 'Premium Silk Saree with Zari Border Handwoven', price: '₹259.21', moq: '10', rating: '5.0', category: 'Fashion & Apparel', image: '/silk_saree.png', images: ['/silk_saree.png', '/silk_saree_2.png', '/silk_saree_3.png'] },
+  { id: 'fp14', name: 'Elegant Floral Summer A-Line Dress for Women', price: '₹1,499.00', moq: '2', badge: 'Top Seller', category: 'Fashion & Apparel', image: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=400&q=80', images: ['https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=600&q=80'] },
+  { id: 'fp15', name: 'Premium Men\'s Slim Fit Formal Suit Set', price: '₹4,999.00', moq: '1', sold: '1.2k+ sold', category: 'Fashion & Apparel', image: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&q=80', images: ['https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&q=80'] },
+  { id: 'fp10', name: 'Designer Embroidered Lehenga Choli Bridal Collection', price: '₹3,432.33', moq: '1', category: 'Fashion & Apparel', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&q=80' },
+
+  // Jewelry & Accessories
+  { id: 'fp1', name: 'Rose Gold Diamond Ring 18K Pure Gold Wedding Band', price: '₹120.45', moq: '1', badge: 'Lower priced than similar', category: 'Jewelry & Accessories', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=400', images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=600', 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&q=80&w=600'] },
+  { id: 'fp2', name: 'Polished Tungsten Carbide Ring Gunmetal Finish 8mm', price: '₹1,011.78', moq: '2', sold: '390+ sold', category: 'Jewelry & Accessories', image: '/tungsten_ring.png', images: ['/tungsten_ring.png', '/tungsten_ring_2.png', '/tungsten_ring_3.png'] },
+  { id: 'fp8', name: 'Stainless Steel Chronograph Watch Silver Dial', price: '₹221.63', moq: '1', sold: '10+ sold', category: 'Jewelry & Accessories', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80' },
+  { id: 'fp4', name: 'Classic Aviator Sunglasses UV400 Polarized Gold Frame', price: '₹53.00', moq: '100', delivery: 'Delivery by 04 Jun', category: 'Jewelry & Accessories', image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80' },
+  { id: 'fp6', name: 'Premium Leather Oxford Shoes Men Formal Glossy Black', price: '₹1,146.68', moq: '1', rating: '5.0', category: 'Jewelry & Accessories', image: 'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=400&q=80' },
+
+  // Beauty & Personal Care
+  { id: 'fp7', name: 'Crystal Perfume Bottle 100ml Luxury Glass Spray', price: '₹64.57', moq: '50', sold: '180+ sold', category: 'Beauty & Personal Care', image: '/perfume_bottle.png', images: ['/perfume_bottle.png', '/perfume_bottle_2.png', '/perfume_bottle_3.png'] },
+  { id: 'fp11', name: 'Vitamin Mask 50ml Glow Enhancing Moisture Repair Cream', price: '₹97.00', moq: '1', rating: '5.0', sold: '840+ sold', category: 'Beauty & Personal Care', image: '/vitamin_mask.png', images: ['/vitamin_mask.png', 'https://images.unsplash.com/photo-1608248597481-496100c80836?w=600&q=80', 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&q=80'] },
+  { id: 'fp18', name: 'Luxury Organic Handmade Bath Soap - Lavender & Oatmeal', price: '₹349.00', moq: '5', badge: 'Lower priced than similar', category: 'Beauty & Personal Care', image: '/soap_lavender_1.png', images: ['/soap_lavender_1.png', '/soap_lavender_2.png', '/soap_lavender_3.png', '/soap_lavender_4.png'] },
+
+  // Electronics & Gadgets
+  { id: 'fp16', name: 'Smart Solar Charging Backpack with USB Port', price: '₹2,499.00', moq: '1', rating: '4.9', category: 'Electronics & Gadgets', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80' },
+  { id: 'fp5', name: 'Power Bank 10000mAh Slim Metallic Fast Charge', price: '₹1,108.14', moq: '50', badge: 'Lower priced than similar', category: 'Electronics & Gadgets', image: '/power_bank.png', images: ['/power_bank.png', 'https://images.unsplash.com/photo-1609592424089-8d5e1f0e4b77?w=600&q=80', 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&q=80'] },
+  { id: 'fp9', name: 'Bluetooth Earbuds TWS Pro Noise Cancelling', price: '₹1,985.01', moq: '10', sold: '520+ sold', category: 'Electronics & Gadgets', image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&q=80' },
+  { id: 'fp17', name: 'Ultra HD Smart Projector 4K Support Home Theater', price: '₹7,999.00', moq: '1', rating: '4.7', category: 'Electronics & Gadgets', image: 'https://images.unsplash.com/photo-1535016120720-40c646be5580?w=400&q=80' },
+
+  // Home & Kitchen
+  { id: 'fp12', name: 'Pure Copper Water Pitcher Hammered Finish 1.5L', price: '₹1,499.00', moq: '5', rating: '4.8', category: 'Home & Kitchen', image: '/copper_pitcher.png', images: ['/copper_pitcher.png', '/copper_pitcher_2.png', '/copper_pitcher_3.png'] },
+  { id: 'fp13', name: 'Brass Antique Door Knockers Lion Design Heavy Duty', price: '₹899.00', moq: '10', sold: '150+ sold', category: 'Home & Kitchen', image: '/brass_knocker.png', images: ['/brass_knocker.png', '/brass_knocker_2.png', '/brass_knocker_3.png'] },
+  { id: 'fp19', name: 'Electric Ceramic Drip Kettle Cordless Matte Black', price: '₹2,299.00', moq: '5', rating: '4.6', category: 'Home & Kitchen', image: 'https://images.unsplash.com/photo-1582293041079-7814c2f12063?w=400&q=80' },
+  { id: 'fp20', name: 'Robotic Smart Vacuum & Mop Auto Self-Charging', price: '₹18,990.00', moq: '1', sold: '80+ sold', category: 'Home & Kitchen', image: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=400&q=80' },
+
+  // Food & Beverage
+  { id: 'fp21', name: 'Organic Roasted Coffee Beans 100% Arabica Medium Roast', price: '₹450.00', moq: '10', category: 'Food & Beverage', image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&q=80' },
+  { id: 'fp22', name: 'Premium Matcha Green Tea Powder Ceremonial Grade', price: '₹1,299.00', moq: '5', rating: '5.0', category: 'Food & Beverage', image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=400&q=80' },
+  { id: 'fp23', name: 'Extra Virgin Cold Pressed Olive Oil Italian Harvest 1L', price: '₹1,850.00', moq: '2', sold: '300+ sold', category: 'Food & Beverage', image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80' },
 ];
 
 export const RECOMMENDATIONS = [

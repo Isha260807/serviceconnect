@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Menu, X, Bell, LayoutGrid, Zap, Sparkles, ChevronDown, Bookmark, Share2, ChevronsUpDown, Navigation } from 'lucide-react';
+import { Search, MapPin, Menu, X, Bell, LayoutGrid, Zap, Sparkles, ChevronDown, Bookmark, Share2, ChevronsUpDown, Navigation, ShoppingCart } from 'lucide-react';
 import { ALL_CITIES } from '../../data/cities';
 import Button from '../common/Button';
 import { cn } from '../../utils/cn';
@@ -16,12 +16,58 @@ const SEARCH_SUGGESTIONS = [
   { name: 'Pest Control', category: 'Category' },
 ];
 
-
-
 const Navbar = ({ onSearch }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const isHomePage = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
+  const [user, setUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
+
+  const checkUser = () => {
+    const stored = localStorage.getItem('currentUser');
+    if (stored) {
+      try {
+        setUser(JSON.parse(stored));
+      } catch (e) {
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  };
+
+  const checkCart = () => {
+    const stored = localStorage.getItem('sc_local_cart');
+    if (stored) {
+      try {
+        const cart = JSON.parse(stored);
+        setCartCount(cart.length);
+      } catch (e) {
+        setCartCount(0);
+      }
+    } else {
+      setCartCount(0);
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+    checkCart();
+    window.addEventListener('authChange', checkUser);
+    window.addEventListener('cartChange', checkCart);
+    return () => {
+      window.removeEventListener('authChange', checkUser);
+      window.removeEventListener('cartChange', checkCart);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setUser(null);
+    window.dispatchEvent(new Event('authChange'));
+    navigate('/');
+  };
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
@@ -92,21 +138,21 @@ const Navbar = ({ onSearch }) => {
   return (
     <nav className={cn(
       'fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b',
-      showGlassyNav ? 'bg-[#D4F4FA]/90 backdrop-blur-xl border-cyan-100 pt-8 pb-3 md:py-2 shadow-md shadow-cyan-900/5' : 'bg-transparent border-transparent py-3',
+      showGlassyNav ? 'bg-[#FFF9D6]/90 backdrop-blur-xl border-yellow-200/60 pt-8 pb-3 md:py-2 shadow-md shadow-yellow-900/5' : 'bg-transparent border-transparent py-3',
       (pathname === '/' || pathname === '/services' || pathname === '/profile') ? 'md:block hidden' : 'block'
     )}>
       <div className="max-w-[1400px] mx-auto px-4 md:px-6 flex items-center justify-between gap-4">
         {/* Logo (Desktop) / Location (Mobile) */}
-        <div className="flex items-center gap-2 flex-shrink-0 cursor-pointer group">
+        <div onClick={() => navigate('/')} className="flex items-center gap-2 flex-shrink-0 cursor-pointer group">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform shadow-lg shadow-primary-500/20">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-[#FFE37D] rounded-xl flex items-center justify-center text-slate-900 group-hover:rotate-12 transition-transform shadow-lg shadow-yellow-400/30">
               <LayoutGrid size={20} className="md:w-6 md:h-6" />
             </div>
             <span className={cn(
               "text-lg md:text-xl font-display font-bold tracking-tight transition-colors duration-300",
               showGlassyNav ? "text-slate-900" : "text-white"
             )}>
-              Service<span className="text-primary-500">Connect</span>
+              Service<span className="text-yellow-600">Connect</span>
             </span>
           </div>
 
@@ -193,7 +239,7 @@ const Navbar = ({ onSearch }) => {
           </div>
           
           <div className="flex items-center flex-1 gap-2 px-3 relative" ref={suggestionRef}>
-            <Search size={18} className="text-primary-500" />
+            <Search size={18} className="text-yellow-600" />
             <input 
               type="text" 
               value={query}
@@ -224,7 +270,7 @@ const Navbar = ({ onSearch }) => {
               )}
             </AnimatePresence>
           </div>
-          <Button size="sm" className="rounded-xl px-6 flex items-center gap-2">
+          <Button size="sm" className="rounded-xl px-6 flex items-center gap-2 !bg-[#FFE37D] !text-slate-900 hover:!bg-[#F5D555] shadow-md shadow-yellow-400/30 font-bold">
             <Search size={16} />
             Search
           </Button>
@@ -244,6 +290,25 @@ const Navbar = ({ onSearch }) => {
             showGlassyNav ? "w-10 h-10 bg-white text-slate-700 shadow-sm border border-gray-100" : "p-2 rounded-xl text-white hover:bg-white/10"
           )}>
             <Bookmark size={20} />
+          </button>
+          
+          <button 
+            id="navbar-cart-btn"
+            onClick={() => navigate('/cart')}
+            className={cn(
+              "rounded-full transition-all relative flex items-center justify-center",
+              showGlassyNav ? "w-10 h-10 bg-white text-slate-700 shadow-sm border border-gray-100" : "p-2 rounded-xl text-white hover:bg-white/10"
+            )}
+          >
+            <ShoppingCart size={20} />
+            {cartCount > 0 && (
+              <span className={cn(
+                "absolute -top-1 -right-1 w-5 h-5 rounded-full border-2 border-white flex items-center justify-center text-[9px] font-black text-white",
+                showGlassyNav ? "bg-slate-900" : "bg-accent-500"
+              )}>
+                {cartCount}
+              </span>
+            )}
           </button>
           
           <button className={cn(
@@ -272,7 +337,17 @@ const Navbar = ({ onSearch }) => {
                <Menu size={20} />
                Menu
             </Button>
-            <Button size="sm" className="rounded-xl px-5 ml-2">Login</Button>
+            {user ? (
+              <Link to="/profile" className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-200 text-white flex items-center justify-center font-bold text-sm hover:bg-slate-800 transition-all shadow-md">
+                  {user.initials || 'U'}
+                </div>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <Button size="sm" className="rounded-xl px-5 ml-2">Login</Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -304,12 +379,12 @@ const Navbar = ({ onSearch }) => {
 
                <div className="px-8 mt-10 space-y-10">
                   <div className="flex items-center gap-4">
-                     <div className="w-16 h-16 rounded-2xl bg-primary-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                        JD
+                     <div className="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        {user ? (user.initials || 'U') : 'G'}
                      </div>
                      <div>
-                        <h3 className="text-xl font-bold text-slate-900">Ishaan Tech</h3>
-                        <p className="text-sm text-slate-400 font-medium">ishaan@tech.com</p>
+                        <h3 className="text-xl font-bold text-slate-900">{user ? user.name : 'Guest User'}</h3>
+                        <p className="text-sm text-slate-400 font-medium">{user ? user.email : 'guest@serviceconnect.com'}</p>
                      </div>
                   </div>
 
@@ -317,9 +392,8 @@ const Navbar = ({ onSearch }) => {
                      {[
                         { label: 'Home', path: '/' },
                         { label: 'All Categories', path: '/categories' },
-                        { label: 'Services', path: '/services' },
+                        { label: 'Social', path: '/services' },
                         { label: 'My Profile', path: '/profile' },
-                        { label: 'Be a Vendor', path: '/vendor-panel' },
                         { label: 'Help & FAQ', path: '#' }
                      ].map((link, idx) => (
                         <button 
@@ -334,7 +408,11 @@ const Navbar = ({ onSearch }) => {
                   </nav>
 
                   <div className="pt-10 border-t border-slate-100">
-                     <Button className="w-full rounded-2xl py-4 shadow-xl shadow-primary-500/20">Sign Out</Button>
+                     {user ? (
+                       <Button onClick={handleLogout} className="w-full rounded-2xl py-4 shadow-xl shadow-red-500/10 bg-[#E13B3B] hover:bg-red-600 text-white">Sign Out</Button>
+                     ) : (
+                       <Button onClick={() => { setIsMobileMenuOpen(false); navigate('/login'); }} className="w-full rounded-2xl py-4 shadow-xl shadow-primary-500/20">Sign In</Button>
+                     )}
                   </div>
                </div>
             </motion.div>

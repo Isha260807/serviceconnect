@@ -323,7 +323,7 @@ const SocialFeed = () => {
           </div>
        </div>
 
-       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-2 pb-12 flex flex-col lg:flex-row gap-8">
+       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-2 md:pt-28 pb-12 flex flex-col lg:flex-row gap-8">
           {/* Main Feed */}
           <div className="flex-1 max-w-2xl mx-auto w-full space-y-4">
             <div className="flex items-center justify-between mb-4 px-1">

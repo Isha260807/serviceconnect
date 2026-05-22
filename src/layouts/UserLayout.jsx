@@ -10,6 +10,7 @@ const UserLayout = ({ children }) => {
   const navigate = useNavigate();
   const isHomePage = pathname === '/';
   const isDetailPage = pathname.includes('/hotel/') || pathname.match(/\/category\/[^/]+\/[^/]+/) || pathname.includes('/marketplace/product/');
+  const isAuthPage = pathname === '/login' || pathname === '/signup';
   
   const bottomNavItems = [
     { icon: Home, label: 'Home', path: '/', active: pathname === '/' },
@@ -20,40 +21,45 @@ const UserLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-transparent overflow-x-hidden">
-      {/* Hide standard Navbar on mobile for detail pages where we have custom headers */}
-      <div className={cn(!isDetailPage ? "block" : "hidden md:block")}>
-        <Navbar />
-      </div>
-      <main className={cn(!isDetailPage ? "pb-20 md:pb-0" : "pb-0")}>
+      {/* Hide standard Navbar on mobile for detail pages where we have custom headers, and hide completely on auth pages */}
+      {!isAuthPage && (
+        <div className={cn(!isDetailPage ? "block" : "hidden md:block")}>
+          <Navbar />
+        </div>
+      )}
+      <main className={cn((!isDetailPage && !isAuthPage) ? "pb-20 md:pb-0" : "pb-0")}>
         {children}
       </main>
 
-      {/* Mobile Bottom Navigation - Hidden on Detail Pages */}
-      {!isDetailPage && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-2 py-2 flex items-center justify-around z-[100] shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      {/* Mobile Bottom Navigation - Hidden on Detail and Auth Pages */}
+      {!isDetailPage && !isAuthPage && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#FFFDF0] border-t border-yellow-200/60 px-2 py-2 flex items-center justify-around z-[100] shadow-[0_-4px_20px_rgba(212,172,26,0.08)]">
           {bottomNavItems.map((item, idx) => (
             <button 
               key={idx} 
               onClick={() => navigate(item.path)}
               className={cn(
                 "flex flex-col items-center gap-1 min-w-[70px] relative transition-all duration-300",
-                item.active ? "text-primary-600 scale-110" : "text-slate-400 hover:text-slate-600"
+                item.active ? "text-slate-900 scale-110" : "text-slate-400 hover:text-slate-600"
               )}
             >
               <div className="relative">
                 <item.icon size={22} strokeWidth={item.active ? 2.5 : 2} />
                 {item.badge && (
-                  <span className="absolute -top-1.5 -right-3.5 bg-accent-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                  <span className="absolute -top-1.5 -right-3.5 bg-[#FFE37D] text-slate-900 text-[8px] font-bold px-1.5 py-0.5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
                     {item.badge}
                   </span>
                 )}
               </div>
               <span className={cn(
                 "text-[10px] font-bold tracking-tight",
-                item.active ? "text-primary-600" : "text-slate-500"
+                item.active ? "text-slate-900" : "text-slate-500"
               )}>
                 {item.label}
               </span>
+              {item.active && (
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-5 h-1 bg-[#FFE37D] rounded-full" />
+              )}
             </button>
           ))}
         </div>
@@ -65,11 +71,11 @@ const UserLayout = ({ children }) => {
         <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
+              <div className="w-10 h-10 bg-[#FFE37D] rounded-xl flex items-center justify-center text-slate-900">
                 <span className="text-xl font-bold">S</span>
               </div>
               <span className="text-2xl font-display font-bold tracking-tight">
-                Service<span className="text-primary-400">Connect</span>
+                Service<span className="text-[#FFE37D]">Connect</span>
               </span>
             </div>
             <p className="text-white/70 leading-relaxed">

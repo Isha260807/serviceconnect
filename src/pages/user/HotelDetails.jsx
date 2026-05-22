@@ -24,7 +24,7 @@ import {
 import { cn } from '../../utils/cn';
 import { storage } from '../../utils/storage';
 import BookingModal from '../../components/user/BookingModal';
-import BestDealModal from '../../components/common/BestDealModal';
+import EnquiryModal from '../../components/common/EnquiryModal';
 import hotelVideo from '../../assets/hotel.mp4';
 
 const HotelDetails = () => {
@@ -43,6 +43,26 @@ const HotelDetails = () => {
   const scrollRef = useRef(null);
   const tabsRef = useRef(null);
   const mobileContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (localStorage.getItem('sc_open_booking_modal') === 'true') {
+      localStorage.removeItem('sc_open_booking_modal');
+      setBookingType('booking');
+      setIsBookingModalOpen(true);
+    }
+  }, []);
+
+  const handleBookNow = () => {
+    const userStr = localStorage.getItem('currentUser');
+    if (!userStr) {
+      localStorage.setItem('sc_redirect_after_login', window.location.pathname);
+      localStorage.setItem('sc_open_booking_modal', 'true');
+      navigate('/login');
+    } else {
+      setBookingType('booking');
+      setIsBookingModalOpen(true);
+    }
+  };
 
   const tabs = ['Overview', 'Services', 'Quick Info', 'Photos', 'Explore', 'Reviews'];
 
@@ -383,9 +403,12 @@ const HotelDetails = () => {
                   <button className="bg-[#008a00] text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg shadow-green-500/10 active:scale-95 transition-all">
                     <Phone size={18} fill="currentColor" /> {hotel.phone}
                   </button>
-                    <button onClick={() => setIsBestDealModalOpen(true)} className="bg-[#20594e] text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg shadow-[#20594e]/10 active:scale-95 transition-all">
-                      <Zap size={18} fill="currentColor" /> Enquire Now
-                    </button>
+                  <button onClick={handleBookNow} className="bg-[#20594e] hover:bg-[#1b4b41] text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg shadow-[#20594e]/10 active:scale-95 transition-all">
+                    <Zap size={18} fill="currentColor" /> Book Now
+                  </button>
+                  <button onClick={() => setIsBestDealModalOpen(true)} className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px] shadow-lg active:scale-95 transition-all">
+                    Enquire Now
+                  </button>
                   <button className="bg-white border border-slate-200 text-slate-700 px-6 py-2.5 rounded-lg flex items-center gap-3 font-bold text-[14px]">
                     <div className="text-[#25d366]"><MessageSquare size={20} fill="currentColor" /></div> WhatsApp
                   </button>
@@ -429,11 +452,18 @@ const HotelDetails = () => {
             {/* Sidebar (Desktop) */}
             <div className="hidden lg:block lg:col-span-1">
               <Card className="p-8 sticky top-24 border-slate-200 shadow-xl bg-white/50 backdrop-blur-md">
+                 <button 
+                    onClick={handleBookNow}
+                    className="w-full bg-[#20594e] hover:bg-[#1b4b41] text-white font-extrabold py-4 rounded-xl active:scale-95 transition-all text-sm uppercase shadow-lg shadow-[#20594e]/20 mb-6"
+                 >
+                    Book Now
+                 </button>
+                 <div className="h-[1px] bg-slate-200/60 mb-6"></div>
                  <h4 className="text-xl font-bold text-slate-900 mb-6 font-display">Inquiry Now</h4>
                  <div className="space-y-6">
                     <input type="text" placeholder="Your Name" className="w-full px-4 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold outline-none focus:bg-white focus:border-[#20594e]" />
                     <input type="text" placeholder="Mobile Number" className="w-full px-4 py-3.5 bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold outline-none focus:bg-white focus:border-[#20594e]" />
-                    <button className="w-full bg-[#20594e] text-white font-extrabold py-4 rounded-xl active:scale-95 transition-all text-sm uppercase">Submit Inquiry</button>
+                    <button onClick={() => setIsBestDealModalOpen(true)} className="w-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold py-4 rounded-xl active:scale-95 transition-all text-sm uppercase">Submit Inquiry</button>
                  </div>
               </Card>
             </div>
@@ -447,10 +477,7 @@ const HotelDetails = () => {
              Call Now
           </button>
           <button 
-            onClick={() => {
-              setBookingType('booking');
-              setIsBookingModalOpen(true);
-            }} 
+            onClick={handleBookNow} 
             className="flex-1 bg-[#20594e] text-white py-3.5 rounded-[20px] font-black text-[12px] active:scale-95 transition-all shadow-xl shadow-[#20594e]/20"
           >
              Book Now
@@ -466,7 +493,12 @@ const HotelDetails = () => {
          item={hotel} 
          type={bookingType}
        />
-       <BestDealModal isOpen={isBestDealModalOpen} onClose={() => setIsBestDealModalOpen(false)} itemName={hotel.name} />
+       <EnquiryModal
+         isOpen={isBestDealModalOpen}
+         onClose={() => setIsBestDealModalOpen(false)}
+         itemName={hotel?.name || 'this service'}
+         type="service"
+       />
     </UserLayout>
   );
 

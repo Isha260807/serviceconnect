@@ -44,14 +44,14 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
   return (
     <div className="min-h-screen bg-transparent pb-24">
       {/* Sticky Top Section */}
-      <div className="sticky top-0 z-[100] bg-gradient-to-b from-[#D4F4FA] to-[#F2FBFD] shadow-sm overflow-x-hidden">
+      <div className="sticky top-0 z-[100] bg-[#fdf9da] shadow-sm overflow-x-hidden">
         {/* Header */}
         <div className="px-4 pt-3 pb-1 flex items-center justify-between">
           <div className="flex items-center gap-3">
              <button onClick={handleBack} className="p-2 -ml-2 rounded-xl hover:bg-slate-50 transition-colors">
                <ArrowLeft size={20} className="text-slate-800" />
              </button>
-             <span className="text-lg font-display font-bold tracking-tight text-primary-600">
+             <span onClick={() => navigate('/')} className="text-lg font-display font-bold tracking-tight text-primary-600 cursor-pointer">
                 Service<span className="text-slate-900">Connect</span>
              </span>
           </div>
@@ -111,7 +111,7 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
               className="space-y-6"
             >
               <h2 className="text-base font-bold text-slate-900 mb-5 px-1">{group.title}</h2>
-              <div className="grid grid-cols-4 gap-y-6 gap-x-2">
+              <div className="grid grid-cols-4 md:grid-cols-7 gap-y-6 gap-x-2 justify-items-start px-1">
                 {(() => {
                   const isExpanded = expandedGroups[group.id];
                   const itemsToShow = isExpanded || group.items.length <= 16 
@@ -126,19 +126,18 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
                         <motion.div
                           whileTap={{ scale: 0.9 }}
                           key={item.id}
-                          className="flex flex-col items-center gap-1 active:scale-90 transition-transform cursor-pointer"
+                          className="flex flex-col items-start gap-1 active:scale-90 transition-transform cursor-pointer"
                           onClick={() => {
                             const name = item.name.toLowerCase();
                             const route = name.includes('hotels') ? '/hotels' : `/category/${name.replace(/ /g, '-')}`;
                             navigate(route);
                           }}
                         >
-                          <div className="w-16 h-14 flex items-center justify-center">
+                          <div className="w-16 h-14 flex items-center justify-start">
                             <img src={item.icon} alt={item.name} className="w-13 h-13 object-contain" />
                           </div>
                           <span 
-                            className="text-[12px] font-bold text-slate-800 text-center leading-tight h-8 flex items-start justify-center px-0.5"
-                            style={{ fontFamily: "'URW Chancery L', cursive" }}
+                            className="text-[12px] font-bold text-slate-800 text-left leading-tight h-8 flex items-start justify-start px-0.5"
                           >
                             {item.name}
                           </span>
@@ -149,10 +148,10 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
                         <motion.div 
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="flex flex-col items-center gap-1 active:scale-90 transition-transform cursor-pointer"
+                          className="flex flex-col items-start gap-1 active:scale-90 transition-transform cursor-pointer"
                           onClick={() => setExpandedGroups(prev => ({ ...prev, [group.id]: true }))}
                         >
-                          <div className="w-16 h-14 flex items-center justify-center">
+                          <div className="w-16 h-14 flex items-center justify-start">
                             <div className="w-11 h-11 bg-slate-100 rounded-full flex items-center justify-center text-slate-500">
                               <div className="flex gap-1">
                                 <div className="w-1 h-1 rounded-full bg-slate-400"></div>
@@ -162,8 +161,7 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
                             </div>
                           </div>
                           <span 
-                            className="text-[12px] font-bold text-slate-800 text-center leading-tight h-8 flex items-start justify-center"
-                            style={{ fontFamily: "'URW Chancery L', cursive" }}
+                            className="text-[12px] font-bold text-slate-800 text-left leading-tight h-8 flex items-start justify-start"
                           >
                             More
                           </span>
@@ -174,17 +172,16 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
                         <motion.div 
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="flex flex-col items-center gap-1 active:scale-90 transition-transform cursor-pointer"
+                          className="flex flex-col items-start gap-1 active:scale-90 transition-transform cursor-pointer"
                           onClick={() => setExpandedGroups(prev => ({ ...prev, [group.id]: false }))}
                         >
-                          <div className="w-16 h-14 flex items-center justify-center">
+                          <div className="w-16 h-14 flex items-center justify-start">
                             <div className="w-11 h-11 bg-slate-100 rounded-full flex items-center justify-center text-slate-500">
                                <ChevronDown size={20} className="rotate-180" />
                             </div>
                           </div>
                           <span 
-                            className="text-[12px] font-bold text-slate-800 text-center leading-tight h-8 flex items-start justify-center"
-                            style={{ fontFamily: "'URW Chancery L', cursive" }}
+                            className="text-[12px] font-bold text-slate-800 text-left leading-tight h-8 flex items-start justify-start"
                           >
                             Less
                           </span>

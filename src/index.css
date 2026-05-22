@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-200: #99f6e4;
-  --color-primary-300: #90d1c8; /* User Light Color */
-  --color-primary-400: #3e9689; /* User Secondary/Base Color */
-  --color-primary-500: #3e9689; 
-  --color-primary-600: #20594e; /* User Deep Teal Color */
-  --color-primary-700: #1a4d43;
-  --color-primary-800: #164038;
-  --color-primary-900: #12332c;
-  --color-primary-950: #0d2621;
+  /* ===== PRIMARY PALETTE: Golden Yellow #FFE37D ===== */
+  --color-primary-50:  #FFFDF0;
+  --color-primary-100: #FFF9D6;
+  --color-primary-200: #FFF3AA;
+  --color-primary-300: #FFE97D;
+  --color-primary-400: #FFE37D;   /* Brand Color ★ */
+  --color-primary-500: #F5D555;
+  --color-primary-600: #D4AC1A;
+  --color-primary-700: #A88200;
+  --color-primary-800: #7A5E00;
+  --color-primary-900: #4D3B00;
+  --color-primary-950: #2B2000;
 
   --color-secondary-50: #f8fafc;
   --color-secondary-100: #f1f5f9;
@@ -25,13 +26,13 @@
   --color-secondary-900: #0f172a;
   --color-secondary-950: #020617;
 
-  --color-accent-500: #90d1c8;
+  --color-accent-500: #FFE37D;
 
   --font-sans: "Inter", "Roboto", sans-serif;
   --font-display: "Outfit", "Inter", sans-serif;
 
   --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-  --shadow-glass: 0 8px 32px 0 rgba(32, 89, 78, 0.15);
+  --shadow-glass: 0 8px 32px 0 rgba(212, 172, 26, 0.15);
 
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
@@ -40,9 +41,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-slate-900 font-sans antialiased selection:bg-primary-100 selection:text-primary-900 min-h-screen;
-    background: linear-gradient(180deg, #f0f9f8 0%, #ffffff 100%);
-    background-attachment: fixed;
+    @apply bg-white text-slate-900 font-sans antialiased selection:bg-primary-200 selection:text-primary-900 min-h-screen;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -56,7 +55,7 @@
   }
 
   .btn-primary {
-    @apply px-6 py-2.5 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-500 transition-all duration-300 shadow-lg shadow-primary-600/20 active:scale-95;
+    @apply px-6 py-2.5 bg-primary-400 text-slate-900 font-bold rounded-xl hover:bg-primary-500 transition-all duration-300 shadow-lg shadow-primary-400/30 active:scale-95;
   }
 
   .btn-secondary {
@@ -64,7 +63,7 @@
   }
 
   .card-hover {
-    @apply transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-600/10;
+    @apply transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-400/20;
   }
 }
 
@@ -74,11 +73,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-100;
+  background: #FFFDF0;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary-300/50 rounded-full border-2 border-slate-100 hover:bg-primary-400;
+  background: #FFE37D;
+  border-radius: 999px;
+  border: 2px solid #FFFDF0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F5D555;
 }
 
 /* Hide scrollbar utility */
@@ -88,6 +93,20 @@
   height: 0 !important;
 }
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Fly to Cart and Cart Bounce Animation */
+@keyframes cartBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+.cart-bounce {
+  animation: cartBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

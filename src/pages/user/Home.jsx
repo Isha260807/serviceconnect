@@ -69,6 +69,20 @@ const Home = () => {
       return;
     }
 
+    if (lookingFor === 'Products') {
+      const name = cat.name.toLowerCase();
+      let targetTab = 'All';
+      if (name.includes('electronics')) targetTab = 'Electronics & Gadgets';
+      else if (name.includes('food') || name.includes('beverage') || name.includes('agriculture')) targetTab = 'Food & Beverage';
+      else if (name.includes('industrial') || name.includes('chemical') || name.includes('manufacturer') || name.includes('automotive')) targetTab = 'All';
+      else if (name.includes('decor') || name.includes('retail') || name.includes('home')) targetTab = 'Home & Kitchen';
+      else if (name.includes('textile') || name.includes('apparel')) targetTab = 'Fashion & Apparel';
+      else if (name.includes('beauty')) targetTab = 'Beauty & Personal Care';
+      
+      navigate('/marketplace', { state: { category: targetTab } });
+      return;
+    }
+
     const route = cat.name.toLowerCase() === 'hotels' ? '/hotels' : `/category/${cat.name.toLowerCase()}`;
     navigate(route);
   };
@@ -87,7 +101,7 @@ const Home = () => {
         exit={{ opacity: 1 }}
         className="md:hidden bg-white"
       >
-        <div className="sticky top-0 z-50 px-4 pt-6 pb-2 bg-[#F2FBFD] shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+        <div className="sticky top-0 z-50 px-4 pt-6 pb-2 bg-[#fdf9da] shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3" onClick={() => setIsLocationOpen(true)}>
               <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-primary-500 shadow-sm border border-primary-50">
@@ -308,7 +322,7 @@ const Home = () => {
       </motion.div>
 
       {/* Desktop Hero Section */}
-      <section className="hidden md:flex flex-col bg-gradient-to-b from-[#F2FBFD] to-white pt-24 pb-10 overflow-hidden">
+      <section className="hidden md:flex flex-col bg-gradient-to-b from-[#fdf9da] to-white pt-28 pb-10 overflow-hidden">
         <div className="max-w-[1400px] mx-auto w-full px-6 flex flex-col items-center">
           {/* Tabs */}
           <div className="flex items-center gap-10 mb-6">
@@ -509,8 +523,17 @@ const Home = () => {
           </div>
 
           <button
-            className="mt-6 mb-12 text-sm font-bold text-primary-600 hover:underline flex items-center gap-1 transition-all"
-            onClick={() => setIsCategoriesOverlayOpen(true)}
+            className={cn(
+              "mt-6 text-sm font-bold text-primary-600 hover:underline flex items-center gap-1 transition-all",
+              lookingFor === 'Services' ? "mb-1 md:mb-2" : "mb-12"
+            )}
+            onClick={() => {
+              if (lookingFor === 'Products') {
+                navigate('/marketplace');
+                return;
+              }
+              setIsCategoriesOverlayOpen(true);
+            }}
           >
             View All <ArrowRight size={14} />
           </button>
@@ -619,7 +642,7 @@ const Home = () => {
       {lookingFor === 'Services' && (
       <>
       {/* Home Services Quick Links */}
-      <section className="max-w-[1400px] mx-auto px-4 md:px-6 mb-4 mt-2 md:mt-2 md:mb-8">
+      <section className="max-w-[1400px] mx-auto px-4 md:px-6 mb-4 mt-0 md:mt-0 md:mb-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">Home services</h2>
           <ChevronDown size={24} className="-rotate-90 text-slate-400" />

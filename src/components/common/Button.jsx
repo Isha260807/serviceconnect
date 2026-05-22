@@ -12,11 +12,11 @@ const Button = React.forwardRef(({
   ...props 
 }, ref) => {
   const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-500/20 active:bg-primary-800',
+    primary: 'bg-[#FFE37D] text-slate-900 hover:bg-[#F5D555] shadow-lg shadow-yellow-400/25 active:bg-[#EDCB3A] font-bold',
     secondary: 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 active:bg-slate-100',
-    outline: 'bg-transparent text-primary-600 border-2 border-primary-600 hover:bg-primary-50 active:bg-primary-100 font-semibold',
+    outline: 'bg-transparent text-yellow-700 border-2 border-[#FFE37D] hover:bg-primary-50 active:bg-primary-100 font-semibold',
     ghost: 'bg-transparent text-slate-600 hover:bg-slate-100 active:bg-slate-200',
-    danger: 'bg-accent-600 text-white hover:bg-accent-700 shadow-lg shadow-accent-500/20 active:bg-accent-800',
+    danger: 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/20 active:bg-red-700',
   };
 
   const sizes = {
