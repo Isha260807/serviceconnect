@@ -65,6 +65,14 @@ const Profile = () => {
     return null;
   });
 
+  // Wishlist - real data from localStorage
+  const [wishlist, setWishlist] = useState(() => storage.getWishlist());
+  useEffect(() => {
+    const sync = () => setWishlist(storage.getWishlist());
+    window.addEventListener('wishlistChange', sync);
+    return () => window.removeEventListener('wishlistChange', sync);
+  }, []);
+
   useEffect(() => {
     if (!currentUser || !currentUser.loggedIn) {
       navigate('/login');
@@ -100,14 +108,6 @@ const Profile = () => {
 
   const realEnquiries = storage.getEnquiries();
   const enquiries = realEnquiries.length > 0 ? realEnquiries : DUMMY_ENQUIRIES;
-
-  // Wishlist - real data from localStorage
-  const [wishlist, setWishlist] = useState(() => storage.getWishlist());
-  useEffect(() => {
-    const sync = () => setWishlist(storage.getWishlist());
-    window.addEventListener('wishlistChange', sync);
-    return () => window.removeEventListener('wishlistChange', sync);
-  }, []);
 
   const handleRemoveWishlist = (productId) => {
     const item = storage.getWishlist().find(p => p.id === productId);
@@ -157,7 +157,7 @@ const Profile = () => {
           setCurrentUser(null);
           window.dispatchEvent(new Event('authChange'));
           triggerToast("Logged out successfully");
-          setTimeout(() => navigate('/'), 1000);
+          setTimeout(() => navigate('/login'), 1000);
         }, danger: true },
       ]
     }

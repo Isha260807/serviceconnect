@@ -44,11 +44,11 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
   return (
     <div className="min-h-screen bg-transparent pb-24">
       {/* Sticky Top Section */}
-      <div className="sticky top-0 z-[100] bg-[#fdf9da] shadow-sm overflow-x-hidden">
-        {/* Header */}
-        <div className="px-4 pt-3 pb-1 flex items-center justify-between">
+      <div className="sticky top-0 z-[100] bg-white shadow-sm overflow-x-hidden">
+        {/* Header (Navbar Row) */}
+        <div className="bg-[#fdf9da] px-4 pt-3 pb-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-             <button onClick={handleBack} className="p-2 -ml-2 rounded-xl hover:bg-slate-50 transition-colors">
+             <button onClick={handleBack} className="p-2 -ml-2 rounded-xl hover:bg-white/40 transition-colors">
                <ArrowLeft size={20} className="text-slate-800" />
              </button>
              <span onClick={() => navigate('/')} className="text-lg font-display font-bold tracking-tight text-primary-600 cursor-pointer">
@@ -58,9 +58,10 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
           <Bell size={20} className="text-slate-400" />
         </div>
 
-        {/* Search Bar */}
-        <div className="px-4 pb-2">
-          <div className="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white/50 rounded-2xl p-1 flex items-center gap-2 focus-within:border-primary-500/30 transition-all">
+        {/* Search Bar & Tabs Container (White Background) */}
+        <div className="px-4 pt-3 pb-2">
+          {/* Search Bar */}
+          <div className="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 rounded-2xl p-1 flex items-center gap-2 focus-within:border-primary-500/30 transition-all mb-3">
             <Search className="text-slate-400 ml-2" size={16} />
             <input
               type="text"
@@ -69,31 +70,31 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
             />
             <Mic size={16} className="text-[#FF5722] mr-2" />
           </div>
-        </div>
 
-        {/* Horizontal Navigation Tabs */}
-        <div ref={tabContainerRef} className="flex overflow-x-auto gap-0.5 px-4 pb-1 no-scrollbar scroll-smooth">
-          {GROUPED_CATEGORIES.map((group) => (
-            <button
-              key={group.id}
-              onClick={() => handleTabClick(group.id)}
-              data-active={activeTab === group.id}
-              className={cn(
-                "whitespace-nowrap px-3 py-1.5 text-[13px] font-bold transition-all duration-300 relative shrink-0",
-                activeTab === group.id 
-                  ? "text-primary-600" 
-                  : "text-slate-500"
-              )}
-            >
-              {group.title}
-              {activeTab === group.id && (
-                <motion.div 
-                  layoutId="activeTabUnderline"
-                  className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary-600 rounded-full"
-                />
-              )}
-            </button>
-          ))}
+          {/* Horizontal Navigation Tabs */}
+          <div ref={tabContainerRef} className="flex overflow-x-auto gap-0.5 pb-1 no-scrollbar scroll-smooth">
+            {GROUPED_CATEGORIES.map((group) => (
+              <button
+                key={group.id}
+                onClick={() => handleTabClick(group.id)}
+                data-active={activeTab === group.id}
+                className={cn(
+                  "whitespace-nowrap px-3 py-1.5 text-[13px] font-bold transition-all duration-300 relative shrink-0",
+                  activeTab === group.id 
+                    ? "text-primary-600" 
+                    : "text-slate-500"
+                )}
+              >
+                {group.title}
+                {activeTab === group.id && (
+                  <motion.div 
+                    layoutId="activeTabUnderline"
+                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary-600 rounded-full"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

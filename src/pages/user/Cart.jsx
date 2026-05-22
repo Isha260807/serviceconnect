@@ -349,7 +349,7 @@ const Cart = () => {
 
   return (
     <UserLayout>
-      <div className="min-h-screen bg-gradient-to-b from-[#fdf9da] to-white pt-6 md:pt-20 pb-20 relative px-4 md:px-6">
+      <div className="min-h-screen bg-white pt-6 md:pt-20 pb-20 relative px-4 md:px-6">
         <div className="max-w-[1200px] mx-auto">
           {/* Header */}
           <div className="flex items-center gap-4 mb-8">

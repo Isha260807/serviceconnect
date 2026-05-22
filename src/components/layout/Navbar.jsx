@@ -66,7 +66,7 @@ const Navbar = ({ onSearch }) => {
     localStorage.removeItem('currentUser');
     setUser(null);
     window.dispatchEvent(new Event('authChange'));
-    navigate('/');
+    navigate('/login');
   };
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
