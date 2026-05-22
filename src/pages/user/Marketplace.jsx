@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Zap, Star, Clock, Heart } from 'lucide-react';
+import { ArrowLeft, Zap, Star, Clock, Heart, Search } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import UserLayout from '../../layouts/UserLayout';
 import { FULL_PRODUCT_LIST, PRODUCT_LIST_TABS } from '../../data/marketplaceData';
@@ -10,10 +10,28 @@ import { storage } from '../../utils/storage';
 const Marketplace = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('q') || '';
   const [activeProductTab, setActiveProductTab] = useState(location.state?.category || 'All');
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [wishlist, setWishlist] = useState(() => storage.getWishlist().map(p => p.id));
+
+  const handleClearSearch = () => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.delete('q');
+      return next;
+    });
+  };
+
+  const filteredProducts = FULL_PRODUCT_LIST.filter(prod => {
+    const matchesTab = activeProductTab === 'All' || prod.category === activeProductTab;
+    const matchesSearch = !searchQuery || 
+      prod.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      prod.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesTab && matchesSearch;
+  });
 
   // Sync wishlist state when changed externally
   useEffect(() => {
@@ -214,7 +232,7 @@ const Marketplace = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="min-h-screen bg-white pt-6 md:pt-20"
+        className="min-h-screen bg-white pt-28 md:pt-20"
       >
         <div className="max-w-[1400px] mx-auto px-6 pb-20">
           {/* Header */}
@@ -247,78 +265,110 @@ const Marketplace = () => {
             ))}
           </div>
 
-          {/* Product Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {FULL_PRODUCT_LIST.filter(prod => activeProductTab === 'All' || prod.category === activeProductTab).map((prod) => (
-              <div
-                key={prod.id}
-                className="group cursor-pointer flex flex-col h-full"
-                onClick={() => navigate(`/marketplace/product/${prod.id}`)}
+          {/* Search Result Pill */}
+          {searchQuery && (
+            <div className="flex items-center gap-2 mb-6 bg-slate-50 border border-slate-100 px-4 py-2.5 rounded-xl w-fit">
+              <span className="text-xs font-medium text-slate-500">Showing results for:</span>
+              <span className="text-xs font-bold text-slate-800 bg-[#FFE37D] px-2 py-0.5 rounded-lg">"{searchQuery}"</span>
+              <button 
+                onClick={handleClearSearch}
+                className="ml-2 w-5 h-5 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 hover:text-slate-800 flex items-center justify-center text-[10px] transition-colors font-bold"
               >
-                <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#F7F8FA] mb-4 border border-slate-100 transition-all group-hover:shadow-xl group-hover:border-primary-100">
-                  <img src={prod.image} alt={prod.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  {/* Heart Button */}
-                  <motion.button
-                    onClick={(e) => handleToggleWishlist(e, prod)}
-                    whileTap={{ scale: 0.75 }}
-                    className={cn(
-                      'absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center shadow-lg transition-all z-10',
-                      wishlist.includes(prod.id)
-                        ? 'bg-rose-500 text-white'
-                        : 'bg-white/90 backdrop-blur-sm text-slate-400 hover:text-rose-500 opacity-0 group-hover:opacity-100'
-                    )}
-                  >
-                    <Heart
-                      size={15}
-                      fill={wishlist.includes(prod.id) ? 'currentColor' : 'none'}
-                      className="transition-all"
-                    />
-                  </motion.button>
-                </div>
-                <div className="space-y-2 flex-1 flex flex-col justify-between">
-                  <div className="space-y-2">
-                    <h3 className="text-[13px] font-medium text-slate-700 line-clamp-2 leading-snug group-hover:text-primary-600 transition-colors">{prod.name}</h3>
-                    <div className="flex flex-col gap-1">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-lg font-black text-slate-900">{prod.price}</span>
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">MOQ: {prod.moq}</span>
-                      </div>
-                      {prod.badge && (
-                        <div className="flex items-center gap-1.5 text-[#E31E24]">
-                          <Zap size={10} fill="currentColor" />
-                          <span className="text-[10px] font-bold tracking-tight italic">{prod.badge}</span>
-                        </div>
-                      )}
-                      {prod.rating && (
-                        <div className="flex items-center gap-1 text-amber-500">
-                          <Star size={10} fill="currentColor" />
-                          <span className="text-[10px] font-black text-slate-900">{prod.rating}</span>
-                        </div>
-                      )}
-                      {prod.delivery && (
-                        <div className="flex items-center gap-1 text-green-600">
-                          <Clock size={10} />
-                          <span className="text-[10px] font-bold">{prod.delivery}</span>
-                        </div>
-                      )}
-                      {prod.sold && (
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{prod.sold}</span>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleBookNow(prod, e);
-                    }}
-                    className="w-full mt-auto py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-[10px] uppercase tracking-wider transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-1.5"
-                  >
-                    Book Now
-                  </button>
-                </div>
+                ✖
+              </button>
+            </div>
+          )}
+
+          {/* Product Grid or Empty State */}
+          {filteredProducts.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 text-center px-4 w-full">
+              <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 border border-slate-100 text-slate-400">
+                <Search size={32} className="text-yellow-600" />
               </div>
-            ))}
-          </div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">No products found</h3>
+              <p className="text-sm text-slate-500 max-w-sm mb-8 font-medium">
+                We couldn't find any products matching "{searchQuery}" under "{activeProductTab}". Try checking spelling or search for another item.
+              </p>
+              <button 
+                onClick={handleClearSearch}
+                className="bg-[#FFE37D] hover:bg-[#F5D555] text-slate-900 font-bold px-6 py-3 rounded-xl text-sm transition-all active:scale-[0.98] shadow-md shadow-yellow-400/20"
+              >
+                Clear Search
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {filteredProducts.map((prod) => (
+                <div
+                  key={prod.id}
+                  className="group cursor-pointer flex flex-col h-full"
+                  onClick={() => navigate(`/marketplace/product/${prod.id}`)}
+                >
+                  <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#F7F8FA] mb-4 border border-slate-100 transition-all group-hover:shadow-xl group-hover:border-primary-100">
+                    <img src={prod.image} alt={prod.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    {/* Heart Button */}
+                    <motion.button
+                      onClick={(e) => handleToggleWishlist(e, prod)}
+                      whileTap={{ scale: 0.75 }}
+                      className={cn(
+                        'absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center shadow-lg transition-all z-10',
+                        wishlist.includes(prod.id)
+                          ? 'bg-rose-500 text-white'
+                          : 'bg-white/90 backdrop-blur-sm text-slate-400 hover:text-rose-500 opacity-0 group-hover:opacity-100'
+                      )}
+                    >
+                      <Heart
+                        size={15}
+                        fill={wishlist.includes(prod.id) ? 'currentColor' : 'none'}
+                        className="transition-all"
+                      />
+                    </motion.button>
+                  </div>
+                  <div className="space-y-2 flex-1 flex flex-col justify-between">
+                    <div className="space-y-2">
+                      <h3 className="text-[13px] font-medium text-slate-700 line-clamp-2 leading-snug group-hover:text-primary-600 transition-colors">{prod.name}</h3>
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-lg font-black text-slate-900">{prod.price}</span>
+                          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-tighter">MOQ: {prod.moq}</span>
+                        </div>
+                        {prod.badge && (
+                          <div className="flex items-center gap-1.5 text-[#E31E24]">
+                            <Zap size={10} fill="currentColor" />
+                            <span className="text-[10px] font-bold tracking-tight italic">{prod.badge}</span>
+                          </div>
+                        )}
+                        {prod.rating && (
+                          <div className="flex items-center gap-1 text-amber-500">
+                            <Star size={10} fill="currentColor" />
+                            <span className="text-[10px] font-black text-slate-900">{prod.rating}</span>
+                          </div>
+                        )}
+                        {prod.delivery && (
+                          <div className="flex items-center gap-1 text-green-600">
+                            <Clock size={10} />
+                            <span className="text-[10px] font-bold">{prod.delivery}</span>
+                          </div>
+                        )}
+                        {prod.sold && (
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{prod.sold}</span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleBookNow(prod, e);
+                      }}
+                      className="w-full mt-auto py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-[10px] uppercase tracking-wider transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-1.5"
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
       {/* Toast Alert */}

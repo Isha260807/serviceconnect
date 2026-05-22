@@ -464,80 +464,84 @@ const Cart = () => {
 
               {/* Right Column: Billing and Checkout Form */}
               <div className="lg:col-span-5">
-                <form onSubmit={handleCheckout} className="bg-white rounded-3xl p-6 md:p-8 border border-cyan-100 shadow-xl shadow-cyan-900/5 space-y-6">
-                  <h3 className="text-lg font-black text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
-                    <Sparkles className="text-primary-500" size={18} /> Checkout & Billing
+                <form onSubmit={handleCheckout} className="bg-white rounded-2xl md:rounded-3xl p-5 md:p-6 border border-cyan-100 shadow-xl shadow-cyan-900/5 space-y-4">
+                  <h3 className="text-base font-black text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2">
+                    <Sparkles className="text-primary-500" size={16} /> Checkout & Billing
                   </h3>
 
                   {/* Errors block */}
                   {error && (
-                    <div className="p-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-xs font-bold leading-relaxed">
+                    <div className="p-3 bg-rose-50 border border-rose-100 text-rose-600 rounded-xl text-xs font-bold leading-relaxed">
                       {error}
                     </div>
                   )}
 
                   {/* Billing form section */}
-                  <div className="space-y-4">
-                    <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest">1. Shipping Details</h4>
+                  <div className="space-y-3">
+                    <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">1. Shipping Details</h4>
                     
                     <div className="space-y-3">
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Full Name"
-                          value={billingInfo.name}
-                          onChange={handleBillingChange}
-                          className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
-                          required
-                        />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="relative">
+                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Full Name"
+                            value={billingInfo.name}
+                            onChange={handleBillingChange}
+                            className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                            required
+                          />
+                        </div>
+
+                        <div className="relative">
+                          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                          <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Mobile Number"
+                            value={billingInfo.phone}
+                            onChange={handleBillingChange}
+                            className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                            required
+                          />
+                        </div>
                       </div>
 
-                      <div className="relative">
-                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-                        <input
-                          type="tel"
-                          name="phone"
-                          placeholder="Mobile Number"
-                          value={billingInfo.phone}
-                          onChange={handleBillingChange}
-                          className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
-                          required
-                        />
-                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="relative">
+                          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                          <input
+                            type="text"
+                            name="address"
+                            placeholder="Full Address"
+                            value={billingInfo.address}
+                            onChange={handleBillingChange}
+                            className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                            required
+                          />
+                        </div>
 
-                      <div className="relative">
-                        <MapPin className="absolute left-4 top-4 text-slate-400" size={16} />
-                        <textarea
-                          name="address"
-                          placeholder="Full Address"
-                          rows="2"
-                          value={billingInfo.address}
-                          onChange={handleBillingChange}
-                          className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all resize-none"
-                          required
-                        ></textarea>
-                      </div>
-
-                      <div>
-                        <input
-                          type="text"
-                          name="pincode"
-                          placeholder="Pincode / Postal Code"
-                          maxLength="6"
-                          value={billingInfo.pincode}
-                          onChange={handleBillingChange}
-                          className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
-                          required
-                        />
+                        <div>
+                          <input
+                            type="text"
+                            name="pincode"
+                            placeholder="Pincode / Postal Code"
+                            maxLength="6"
+                            value={billingInfo.pincode}
+                            onChange={handleBillingChange}
+                            className="w-full px-3.5 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Payment Methods */}
-                  <div className="space-y-4 pt-2">
-                    <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-widest">2. Payment Method</h4>
+                  <div className="space-y-3 pt-1">
+                    <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">2. Payment Method</h4>
                     
                     <div className="grid grid-cols-3 gap-3">
                       {[
@@ -550,14 +554,14 @@ const Cart = () => {
                           type="button"
                           onClick={() => setPaymentMethod(method.id)}
                           className={cn(
-                            "py-3 rounded-2xl border transition-all flex flex-col items-center justify-center gap-1.5 active:scale-95",
+                            "py-2 px-2.5 rounded-xl border transition-all flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 active:scale-95 w-full",
                             paymentMethod === method.id 
                               ? "bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-900/10" 
                               : "bg-slate-50 border-slate-100 text-slate-600 hover:bg-white hover:border-slate-200"
                           )}
                         >
-                          <span className="text-lg">{method.icon}</span>
-                          <span className="text-[10px] font-black uppercase">{method.label}</span>
+                          <span className="text-sm sm:text-base">{method.icon}</span>
+                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider">{method.label}</span>
                         </button>
                       ))}
                     </div>
@@ -570,16 +574,16 @@ const Cart = () => {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="space-y-2"
+                          className="space-y-1.5"
                         >
                           <input
                             type="text"
                             placeholder="Enter UPI ID (e.g. user@paytm)"
                             value={upiId}
                             onChange={(e) => setUpiId(e.target.value)}
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                            className="w-full px-3.5 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
                           />
-                          <p className="text-[10px] text-slate-400 font-bold ml-1">You will receive a payment request on your UPI app.</p>
+                          <p className="text-[9px] text-slate-400 font-bold ml-1">You will receive a payment request on your UPI app.</p>
                         </motion.div>
                       )}
 
@@ -589,7 +593,7 @@ const Cart = () => {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="space-y-3"
+                          className="space-y-2"
                         >
                           <input
                             type="text"
@@ -598,7 +602,7 @@ const Cart = () => {
                             maxLength="19"
                             value={cardDetails.number}
                             onChange={handleCardChange}
-                            className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                            className="w-full px-3.5 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
                           />
                           <div className="grid grid-cols-2 gap-3">
                             <input
@@ -608,7 +612,7 @@ const Cart = () => {
                               maxLength="5"
                               value={cardDetails.expiry}
                               onChange={handleCardChange}
-                              className="px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                              className="px-3.5 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
                             />
                             <input
                               type="password"
@@ -617,7 +621,7 @@ const Cart = () => {
                               maxLength="3"
                               value={cardDetails.cvv}
                               onChange={handleCardChange}
-                              className="px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-sm focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
+                              className="px-3.5 py-2 bg-slate-50 border border-slate-100 rounded-xl text-xs focus:ring-2 focus:ring-primary-500/20 focus:bg-white outline-none placeholder:text-slate-400 font-medium transition-all"
                             />
                           </div>
                         </motion.div>
@@ -629,10 +633,10 @@ const Cart = () => {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl"
+                          className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl"
                         >
-                          <p className="text-[11px] font-bold text-emerald-700 leading-relaxed flex items-start gap-2">
-                            <Check size={14} className="shrink-0 mt-0.5" />
+                          <p className="text-[10px] font-bold text-emerald-700 leading-relaxed flex items-start gap-2">
+                            <Check size={12} className="shrink-0 mt-0.5" />
                             Pay by cash or card upon delivery. Extra verification may be requested at the time of delivery.
                           </p>
                         </motion.div>
@@ -641,23 +645,23 @@ const Cart = () => {
                   </div>
 
                   {/* Summary Totals */}
-                  <div className="pt-4 border-t border-slate-100 space-y-2">
-                    <div className="flex justify-between text-xs font-bold text-slate-500">
+                  <div className="pt-3 border-t border-slate-100 space-y-1.5">
+                    <div className="flex justify-between text-[11px] font-bold text-slate-500">
                       <span>Subtotal</span>
                       <span>{formattedAmount(subtotal)}</span>
                     </div>
-                    <div className="flex justify-between text-xs font-bold text-slate-500">
+                    <div className="flex justify-between text-[11px] font-bold text-slate-500">
                       <span>GST (18%)</span>
                       <span>{formattedAmount(gst)}</span>
                     </div>
-                    <div className="flex justify-between text-xs font-bold text-slate-500">
+                    <div className="flex justify-between text-[11px] font-bold text-slate-500">
                       <span>Delivery Fee</span>
                       <span>{delivery === 0 ? 'FREE' : formattedAmount(delivery)}</span>
                     </div>
                     
-                    <div className="flex justify-between items-center text-base font-black text-slate-900 pt-2 border-t border-dashed border-slate-100">
+                    <div className="flex justify-between items-center text-xs font-black text-slate-900 pt-2 border-t border-dashed border-slate-100">
                       <span>Grand Total</span>
-                      <span className="text-lg text-primary-600">{formattedAmount(total)}</span>
+                      <span className="text-sm text-primary-600">{formattedAmount(total)}</span>
                     </div>
                   </div>
 
@@ -665,11 +669,11 @@ const Cart = () => {
                   <button
                     type="submit"
                     disabled={isProcessing}
-                    className="w-full bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white py-4 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all relative overflow-hidden"
+                    className="w-full bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white py-3 rounded-xl font-black text-xs md:text-sm shadow-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-all relative overflow-hidden"
                   >
                     {isProcessing ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                         <span>Processing Order...</span>
                       </>
                     ) : (

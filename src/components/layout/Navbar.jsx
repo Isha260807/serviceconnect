@@ -123,9 +123,32 @@ const Navbar = ({ onSearch }) => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [showSuggestions, showLocSuggestions, isMobileMenuOpen]);
 
+  const routeLocation = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(routeLocation.search);
+    const q = searchParams.get('q') || '';
+    if (routeLocation.pathname === '/marketplace') {
+      setQuery(q);
+    } else {
+      setQuery('');
+    }
+  }, [routeLocation.pathname, routeLocation.search]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/marketplace?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      navigate('/marketplace');
+    }
+    setShowSuggestions(false);
+  };
+
   const handleSelectSuggestion = (s) => {
     setQuery(s.name);
     setShowSuggestions(false);
+    navigate(`/marketplace?q=${encodeURIComponent(s.name)}`);
   };
 
   const handleSelectLocation = (l) => {
@@ -160,7 +183,7 @@ const Navbar = ({ onSearch }) => {
         </div>
 
         {/* Desktop Search Bar - Conditional on Home Page */}
-        <div className={cn(
+        <form onSubmit={handleSearchSubmit} className={cn(
           "hidden md:flex flex-1 max-w-2xl bg-white border border-slate-200 shadow-xl rounded-2xl p-1 items-center transition-all duration-300",
           (!isHomePage || isScrolled) ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
         )}>
@@ -202,7 +225,7 @@ const Navbar = ({ onSearch }) => {
                   <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
                     <div className="p-1.5">
                         <span className="px-2.5 py-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-widest block">Quick Actions</span>
-                        <button className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-primary-50 text-primary-600 transition-colors group">
+                        <button type="button" className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-primary-50 text-primary-600 transition-colors group">
                           <div className="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center group-hover:bg-white transition-colors">
                             <Navigation size={14} />
                           </div>
@@ -216,6 +239,7 @@ const Navbar = ({ onSearch }) => {
                           {filteredLocations.map((l, i) => (
                             <button 
                               key={i} 
+                              type="button"
                               onClick={() => { setSelectedCity(l); setShowLocSuggestions(false); setCitySearch(''); }} 
                               className={cn(
                                 "w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-all",
@@ -256,7 +280,7 @@ const Navbar = ({ onSearch }) => {
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trending Searches</span>
                   </div>
                   {filteredSuggestions.map((s, i) => (
-                    <button key={i} onClick={() => handleSelectSuggestion(s)} className="w-full flex items-center gap-4 px-5 py-3 hover:bg-slate-50 text-left group">
+                    <button key={i} type="button" onClick={() => handleSelectSuggestion(s)} className="w-full flex items-center gap-4 px-5 py-3 hover:bg-slate-50 text-left group">
                       <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
                         <Zap size={14} className="fill-current" />
                       </div>
@@ -270,11 +294,11 @@ const Navbar = ({ onSearch }) => {
               )}
             </AnimatePresence>
           </div>
-          <Button size="sm" className="rounded-xl px-6 flex items-center gap-2 !bg-[#FFE37D] !text-slate-900 hover:!bg-[#F5D555] shadow-md shadow-yellow-400/30 font-bold">
+          <Button type="submit" size="sm" className="rounded-xl px-6 flex items-center gap-2 !bg-[#FFE37D] !text-slate-900 hover:!bg-[#F5D555] shadow-md shadow-yellow-400/30 font-bold">
             <Search size={16} />
             Search
           </Button>
-        </div>
+        </form>
 
         {/* Actions */}
         <div className="flex items-center gap-2 md:gap-4">

@@ -50,6 +50,20 @@ const Home = () => {
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleSearch = (val) => {
+    if (val.trim()) {
+      navigate(`/marketplace?q=${encodeURIComponent(val.trim())}`);
+    } else {
+      navigate('/marketplace');
+    }
+    setShowSuggestions(false);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    handleSearch(searchQuery);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (locationRef.current && !locationRef.current.contains(event.target)) {
@@ -184,7 +198,7 @@ const Home = () => {
                       <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
                         <div className="p-1.5">
                             <span className="px-2.5 py-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-widest block">Quick Actions</span>
-                            <button className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-primary-50 text-primary-600 transition-colors group">
+                            <button type="button" className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-primary-50 text-primary-600 transition-colors group">
                               <div className="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center group-hover:bg-white transition-colors">
                                 <Navigation size={14} />
                               </div>
@@ -198,6 +212,7 @@ const Home = () => {
                               {filteredCities.map((l, i) => (
                                 <button 
                                   key={i} 
+                                  type="button"
                                   onClick={() => { setSelectedCity(l); setIsLocationOpen(false); setCitySearch(''); }} 
                                   className={cn(
                                     "w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-all",
@@ -214,41 +229,48 @@ const Home = () => {
                   )}
                 </AnimatePresence>
               </div>
-              <div className="flex items-center gap-2 px-3 flex-1 relative" ref={suggestionRef}>
-                <input
-                  type="text"
-                  placeholder="Search products, suppliers..."
-                  className="w-full py-2.5 text-[13px] font-medium focus:outline-none placeholder:text-slate-300 bg-transparent"
-                  value={searchQuery}
-                  onChange={(e) => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
-                  onFocus={() => setShowSuggestions(true)}
-                />
-                <AnimatePresence>
-                  {showSuggestions && (
-                    <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:10}} className="absolute top-full left-[-100px] right-0 mt-3 w-[calc(100%+100px)] bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-100 overflow-hidden z-[60]">
-                      <div className="px-5 py-3 border-b border-slate-50 bg-slate-50/50">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trending Searches</span>
-                      </div>
-                      <div className="max-h-[300px] overflow-y-auto">
-                        {filteredSuggestions.map((s, i) => (
-                          <button key={i} onClick={() => { setSearchQuery(s.name); setShowSuggestions(false); }} className="w-full flex items-center gap-4 px-5 py-3 hover:bg-slate-50 text-left group border-b border-slate-50 last:border-none">
-                            <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
-                              <Search size={14} className="fill-current" />
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="text-sm font-bold text-slate-700 group-hover:text-primary-600">{s.name}</span>
-                              <span className="text-[11px] text-slate-400">{s.category}</span>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <button className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-primary-600/20 active:scale-90 transition-transform relative z-20 shrink-0">
-                <Search size={16} />
-              </button>
+              <form onSubmit={handleSearchSubmit} className="flex items-center flex-1 min-w-0 relative">
+                <div className="flex items-center gap-2 px-3 flex-1 relative" ref={suggestionRef}>
+                  <input
+                    type="text"
+                    placeholder="Search products, suppliers..."
+                    className="w-full py-2.5 text-[13px] font-medium focus:outline-none placeholder:text-slate-300 bg-transparent"
+                    value={searchQuery}
+                    onChange={(e) => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
+                    onFocus={() => setShowSuggestions(true)}
+                  />
+                  <AnimatePresence>
+                    {showSuggestions && (
+                      <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:10}} className="absolute top-full left-[-100px] right-0 mt-3 w-[calc(100%+100px)] bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-100 overflow-hidden z-[60]">
+                        <div className="px-5 py-3 border-b border-slate-50 bg-slate-50/50">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trending Searches</span>
+                        </div>
+                        <div className="max-h-[300px] overflow-y-auto">
+                          {filteredSuggestions.map((s, i) => (
+                            <button 
+                              key={i} 
+                              type="button"
+                              onClick={() => { setSearchQuery(s.name); handleSearch(s.name); }} 
+                              className="w-full flex items-center gap-4 px-5 py-3 hover:bg-slate-50 text-left group border-b border-slate-50 last:border-none"
+                            >
+                              <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
+                                <Search size={14} className="fill-current" />
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-sm font-bold text-slate-700 group-hover:text-primary-600">{s.name}</span>
+                                <span className="text-[11px] text-slate-400">{s.category}</span>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <button type="submit" className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-primary-600/20 active:scale-90 transition-transform relative z-20 shrink-0">
+                  <Search size={16} />
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -399,7 +421,7 @@ const Home = () => {
                     <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
                       <div className="p-1.5">
                         <span className="px-2.5 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Actions</span>
-                        <button className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-primary-50 text-primary-600 transition-colors group">
+                        <button type="button" className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl hover:bg-primary-50 text-primary-600 transition-colors group">
                           <div className="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center group-hover:bg-white transition-colors">
                             <Navigation size={14} />
                           </div>
@@ -413,6 +435,7 @@ const Home = () => {
                           {filteredCities.map((city) => (
                             <button
                               key={city}
+                              type="button"
                               className={cn(
                                 "w-full text-left px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
                                 selectedCity === city ? "bg-primary-50 text-primary-700" : "text-slate-600 hover:bg-slate-50 hover:text-primary-600"
@@ -423,7 +446,7 @@ const Home = () => {
                                 setCitySearch('');
                               }}
                             >
-                              {city}
+                               {city}
                             </button>
                           ))}
                         </div>
@@ -434,7 +457,7 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            <div className="flex items-center flex-1 gap-4 px-6">
+            <form onSubmit={handleSearchSubmit} className="flex items-center flex-1 gap-4 px-6">
               <input
                 type="text"
                 placeholder={
@@ -443,16 +466,15 @@ const Home = () => {
                       activeTab === 'Businesses' ? "Search businesses, suppliers, brands..." :
                         "Search trade fairs, suppliers, brands..."
                 }
-                className="w-full py-2.5 text-[16px] font-medium border-none focus:ring-0 focus:outline-none placeholder:text-slate-400 text-slate-700 bg-transparent"
+                className="w-full py-2.5 text-[16px] font-medium border-none focus:ring-0 focus:outline-none placeholder:text-slate-400 text-slate-700 bg-transparent flex-1"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
-
-            <button className="bg-primary-600 hover:bg-primary-700 text-white rounded-full px-7 py-2.5 flex items-center gap-2 shadow-lg shadow-primary-600/20 transition-all active:scale-95 group shrink-0">
-              <Search size={18} className="group-hover:scale-110 transition-transform" />
-              <span className="font-bold text-[14px]">Search</span>
-            </button>
+              <button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white rounded-full px-7 py-2.5 flex items-center gap-2 shadow-lg shadow-primary-600/20 transition-all active:scale-95 group shrink-0">
+                <Search size={18} className="group-hover:scale-110 transition-transform" />
+                <span className="font-bold text-[14px]">Search</span>
+              </button>
+            </form>
           </div>
 
           {/* Browse by Category Header */}

@@ -20,6 +20,16 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
   const [activeTab, setActiveTab] = React.useState(initialTab);
   const [expandedGroups, setExpandedGroups] = React.useState({});
   const tabContainerRef = React.useRef(null);
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/marketplace?q=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      navigate('/marketplace');
+    }
+  };
 
 
   // Sync tab scroll
@@ -61,15 +71,17 @@ const CategoriesPage = ({ isOverlay, onOverlayClose, initialTab = 'daily' }) => 
         {/* Search Bar & Tabs Container (White Background) */}
         <div className="px-4 pt-3 pb-2">
           {/* Search Bar */}
-          <div className="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 rounded-2xl p-1 flex items-center gap-2 focus-within:border-primary-500/30 transition-all mb-3">
+          <form onSubmit={handleSearchSubmit} className="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 rounded-2xl p-1 flex items-center gap-2 focus-within:border-primary-500/30 transition-all mb-3">
             <Search className="text-slate-400 ml-2" size={16} />
             <input
               type="text"
               placeholder="What are you looking for?"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full py-1.5 bg-transparent focus:outline-none text-slate-800 font-semibold placeholder:text-slate-500 text-xs"
             />
             <Mic size={16} className="text-[#FF5722] mr-2" />
-          </div>
+          </form>
 
           {/* Horizontal Navigation Tabs */}
           <div ref={tabContainerRef} className="flex overflow-x-auto gap-0.5 pb-1 no-scrollbar scroll-smooth">
