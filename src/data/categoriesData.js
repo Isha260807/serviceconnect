@@ -109,7 +109,7 @@ export const CATEGORIES_DATA = {
     }
   ],
   default: [
-    { id: 'v1', name: 'Zenith Service Solutions', rating: 4.6, reviewsCount: 500, location: 'Mumbai Central', tags: ['Expert', 'Reliable'], image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800', verified: true, highlight: 'Verified Professional', actionType: 'booking' }
+    { id: 'v1', name: 'Zenith Service Solutions', rating: 4.6, reviewsCount: 500, location: 'Mumbai Central', tags: ['Expert', 'Reliable'], image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800', verified: true, highlight: 'Verified Professional', actionType: 'booking', phone: '1234567890' }
   ],
   hotels: [
     {

@@ -390,7 +390,7 @@ const CategoryDetails = () => {
                     <Download size={15} /> Download Profile
                   </button>
                   <a 
-                    href={`https://wa.me/${item.phone || '919876543210'}`}
+                    href={`https://wa.me/${item.phone || '1234567890'}`}
                     target="_blank"
                     rel="noreferrer"
                     className="bg-white hover:bg-[#f0fdf4] text-[#25d366] border border-[#25d366] font-bold px-6 py-3 rounded-lg flex items-center gap-2 text-sm transition-all duration-200 shadow-sm"
@@ -905,7 +905,7 @@ const CategoryDetails = () => {
                   <div className="p-1.5 bg-slate-50 border border-slate-100 rounded-md text-slate-500 shrink-0">
                     <Phone size={13} />
                   </div>
-                  <span className="truncate">{item.phone || '+91 98765 43210'}</span>
+                  <span className="truncate">{item.phone || '1234567890'}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <div className="p-1.5 bg-slate-50 border border-slate-100 rounded-md text-slate-500 shrink-0">
