@@ -20,7 +20,7 @@ const UserLayout = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-transparent overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       {/* Hide standard Navbar on mobile for detail pages where we have custom headers, and hide completely on auth pages */}
       {!isAuthPage && (
         <div className="block">
