@@ -41,8 +41,9 @@ const AppContent = () => {
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:categoryName" element={<CategoryResults />} />
           <Route path="/category/:categoryName/:id" element={<CategoryDetails />} />
+          <Route path="/category/:categoryName/:id/:subCategoryName" element={<CategoryDetails />} />
           <Route path="/hotels" element={<HotelResults />} />
-          <Route path="/hotel/:id" element={<HotelDetails />} />
+          <Route path="/hotel/:id" element={<CategoryDetails />} />
           <Route path="/vendor/:id" element={<div className="p-20 text-center">Vendor Details Page Coming Soon</div>} />
           <Route path="/services" element={<SocialFeed />} />
           <Route path="/profile" element={<Profile />} />

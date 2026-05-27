@@ -224,7 +224,7 @@ const CategoryResults = () => {
         )}
       </AnimatePresence>
 
-      <div className="max-w-[1400px] mx-auto px-6 pt-[4.4rem] md:pt-20 pb-32 md:pb-4">
+      <div className="max-w-[1400px] mx-auto px-6 pt-[6.5rem] md:pt-28 pb-32 md:pb-4">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-[11px] text-slate-500 mb-0">
           <span className="hover:text-primary-600 cursor-pointer" onClick={() => navigate('/')}>Home</span>
@@ -237,7 +237,7 @@ const CategoryResults = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 md:mb-0 mb-1 font-display">Popular {displayTitle} in Mumbai</h1>
 
         {/* Filters Bar - Unified horizontal scroll for all filters */}
-        <div className="sticky top-[53px] md:relative bg-[#f0fdfa]/95 backdrop-blur-md z-40 -mx-6 px-6 py-3 md:pt-0 md:pb-2 border-b border-slate-100 md:border-none md:mb-14 mb-1">
+        <div className="sticky top-[53px] md:relative bg-white/95 backdrop-blur-md z-40 -mx-6 px-6 py-3 md:pt-0 md:pb-2 border-b border-slate-100 md:border-none md:mb-16 mb-8">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0 scroll-smooth">
             {/* All Filters Trigger */}
             <button 
@@ -432,16 +432,18 @@ const CategoryResults = () => {
 
           {/* Sidebar Form */}
           <div className="lg:col-span-1">
-            <Card className="p-6 sticky top-24 border-slate-200 shadow-xl shadow-slate-200/50">
-               <h4 className="text-base font-bold text-slate-900 mb-1 leading-tight">
-                 Get Top <span className="text-primary-600">{displayTitle}</span> Deals
-               </h4>
-               <p className="text-[11px] text-slate-400 mb-8">Sent to you in seconds for free</p>
-
-               <div className="space-y-6">
-                  <input type="text" placeholder="Your Name" className="block w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-[14px] outline-none focus:border-primary-500 transition-all" />
-                  <input type="text" placeholder="Mobile Number" className="block w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-[14px] outline-none focus:border-primary-500 transition-all" />
-                  <button className="w-full bg-[#0076d7] hover:bg-blue-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 group transition-all active:scale-[0.98] text-[15px]">
+            <Card className="p-5 md:h-[288px] flex flex-col justify-between sticky top-24 border-slate-200 shadow-xl shadow-slate-200/50">
+               <div>
+                 <h4 className="text-base font-bold text-slate-900 mb-1 leading-tight">
+                   Get Top <span className="text-primary-600">{displayTitle}</span> Deals
+                 </h4>
+                 <p className="text-[11px] text-slate-400">Sent to you in seconds for free</p>
+               </div>
+ 
+               <div className="space-y-3.5 mt-4">
+                  <input type="text" placeholder="Your Name" className="block w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[14px] outline-none focus:border-primary-500 transition-all" />
+                  <input type="text" placeholder="Mobile Number" className="block w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[14px] outline-none focus:border-primary-500 transition-all" />
+                  <button className="w-full bg-[#0076d7] hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 group transition-all active:scale-[0.98] text-[15px]">
                     Enquire Now <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                </div>

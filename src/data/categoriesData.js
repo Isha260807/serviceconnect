@@ -109,6 +109,50 @@ export const CATEGORIES_DATA = {
     }
   ],
   default: [
-    { id: 'v1', name: 'Elite Service Provider', rating: 4.6, reviewsCount: 500, location: 'Mumbai Central', tags: ['Expert', 'Reliable'], image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800', verified: true, highlight: 'Verified Professional', actionType: 'booking' }
+    { id: 'v1', name: 'Zenith Service Solutions', rating: 4.6, reviewsCount: 500, location: 'Mumbai Central', tags: ['Expert', 'Reliable'], image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=800', verified: true, highlight: 'Verified Professional', actionType: 'booking' }
+  ],
+  hotels: [
+    {
+      id: 'v1',
+      name: 'Vink Lodge',
+      rating: 3.5,
+      reviewsCount: 479,
+      location: '90 Feet Road Dharavi, Mumbai',
+      tags: ['24 Hour Concierge/Help Desk', 'Room Service', 'Laundry Service'],
+      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=600',
+      verified: false,
+      phone: '09845258527',
+      address: '90 Feet Road Dharavi, Mumbai, Maharashtra, India',
+      yearsInBusiness: 5,
+      gstin: '27AABCV5567K1Z4'
+    },
+    {
+      id: 'v2',
+      name: 'Astha Home',
+      rating: 4.5,
+      reviewsCount: 189,
+      location: 'Thakur Village Kandivali East, Mumbai',
+      tags: ['WiFi', 'AC'],
+      image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=600',
+      verified: true,
+      phone: '09845258527',
+      address: 'Thakur Village Kandivali East, Mumbai, Maharashtra, India',
+      yearsInBusiness: 6,
+      gstin: '27AABCV5567K1Z5'
+    },
+    {
+      id: 'v3',
+      name: 'Marine Bay Resort',
+      rating: 4.2,
+      reviewsCount: 1205,
+      location: 'Marine Drive, Mumbai',
+      tags: ['Sea Facing', 'WiFi', 'Restaurant'],
+      image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=600',
+      verified: true,
+      phone: '09845258527',
+      address: 'Marine Drive, Mumbai, Maharashtra, India',
+      yearsInBusiness: 10,
+      gstin: '27AABCV5567K1Z6'
+    }
   ]
 };

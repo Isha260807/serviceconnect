@@ -611,10 +611,10 @@ const HotelResults = () => {
           <span className="text-slate-400">14443+ Listings</span>
         </div>
 
-        <h1 className="text-2xl font-bold text-slate-900 md:mb-0 mb-1 font-display">Popular Hotels in Mumbai</h1>
+        <h1 className="text-2xl font-bold text-slate-900 mt-0 mb-0 md:my-0 font-display">Popular Hotels in Mumbai</h1>
 
         {/* Filters Bar - Fixed in one scrollable line */}
-        <div className="sticky top-[53px] md:relative bg-[#f0fdfa]/95 backdrop-blur-md z-40 -mx-6 px-6 py-3 md:pt-0 md:pb-2 border-b border-slate-100 md:border-none flex items-center gap-2 overflow-x-auto no-scrollbar md:mb-14 mb-1">
+        <div className="sticky top-[53px] md:relative bg-transparent backdrop-blur-md z-40 -mx-6 px-6 py-0 md:py-0 border-b border-slate-100 md:border-none flex items-center gap-2 overflow-x-auto no-scrollbar md:mb-16 mb-8 -mt-3 md:-mt-6">
           {/* Check-in */}
           <div 
             onClick={() => setIsDatePickerOpen(true)}

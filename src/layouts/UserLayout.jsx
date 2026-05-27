@@ -23,7 +23,7 @@ const UserLayout = ({ children }) => {
     <div className="min-h-screen bg-transparent overflow-x-hidden">
       {/* Hide standard Navbar on mobile for detail pages where we have custom headers, and hide completely on auth pages */}
       {!isAuthPage && (
-        <div className={cn(!isDetailPage ? "block" : "hidden md:block")}>
+        <div className="block">
           <Navbar />
         </div>
       )}
@@ -65,75 +65,75 @@ const UserLayout = ({ children }) => {
         </div>
       )}
       
-      {/* Premium Footer - Only on Home Page */}
-      {pathname === '/' && (
-        <footer className="bg-slate-900 text-white pt-10 md:pt-20 pb-10 mt-0 md:mt-20">
+      {/* Premium Footer - On Home, Category, and Hotel Pages */}
+      {(pathname === '/' || pathname.includes('/category/') || pathname.includes('/hotel/')) && (
+        <footer className="bg-[#f0f9ff] text-slate-800 pt-10 md:pt-20 pb-10 mt-0 md:mt-20 border-t border-sky-100/70">
         <div className="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 bg-[#FFE37D] rounded-xl flex items-center justify-center text-slate-900">
+              <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white">
                 <span className="text-xl font-bold">S</span>
               </div>
-              <span className="text-2xl font-display font-bold tracking-tight">
-                Service<span className="text-[#FFE37D]">Connect</span>
+              <span className="text-2xl font-display font-bold tracking-tight text-slate-900">
+                Service<span className="text-[#0076d7]">Connect</span>
               </span>
             </div>
-            <p className="text-white/70 leading-relaxed">
+            <p className="text-slate-600 leading-relaxed">
               The ultimate marketplace to find the best local services and service providers near you. Verified, trusted, and fast.
             </p>
           </div>
           
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">Services</h4>
-            <ul className="space-y-4 text-white/90">
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Home Services</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Automotive</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Health & Wellness</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Professional Services</a></li>
+            <h4 className="font-bold text-lg mb-6 text-slate-900">Services</h4>
+            <ul className="space-y-4 text-slate-700">
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Home Services</a></li>
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Automotive</a></li>
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Health & Wellness</a></li>
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Professional Services</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">Company</h4>
-            <ul className="space-y-4 text-white/90">
-              <li><a href="#" className="hover:text-primary-400 transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Register as Vendor</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Privacy Policy</a></li>
+            <h4 className="font-bold text-lg mb-6 text-slate-900">Company</h4>
+            <ul className="space-y-4 text-slate-700">
+              <li><a href="#" className="hover:text-primary-600 transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Register as Vendor</a></li>
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-primary-600 transition-colors">Privacy Policy</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6 text-white">Get App</h4>
+            <h4 className="font-bold text-lg mb-6 text-slate-900">Get App</h4>
             <div className="space-y-4">
-              <div className="bg-slate-800 p-4 rounded-xl flex items-center gap-3 cursor-pointer hover:bg-slate-700 transition-colors border border-slate-700">
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                  <span className="text-slate-900 text-xs font-bold font-mono">App</span>
+              <div className="bg-white p-4 rounded-xl flex items-center gap-3 cursor-pointer hover:bg-sky-50 transition-colors border border-sky-200">
+                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold font-mono">App</span>
                 </div>
                 <div>
-                  <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-none">Download on</div>
-                  <div className="text-sm font-bold">App Store</div>
+                  <div className="text-[10px] text-slate-500 uppercase tracking-widest leading-none">Download on</div>
+                  <div className="text-sm font-bold text-slate-800">App Store</div>
                 </div>
               </div>
-              <div className="bg-slate-800 p-4 rounded-xl flex items-center gap-3 cursor-pointer hover:bg-slate-700 transition-colors border border-slate-700">
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                  <span className="text-slate-900 text-xs font-bold">Play</span>
+              <div className="bg-white p-4 rounded-xl flex items-center gap-3 cursor-pointer hover:bg-sky-50 transition-colors border border-sky-200">
+                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">Play</span>
                 </div>
                 <div>
-                  <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-none">Get it on</div>
-                  <div className="text-sm font-bold">Google Play</div>
+                  <div className="text-[10px] text-slate-500 uppercase tracking-widest leading-none">Get it on</div>
+                  <div className="text-sm font-bold text-slate-800">Google Play</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         
-        <div className="max-w-[1400px] mx-auto px-6 mt-20 pt-10 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-white/40 text-sm">© 2026 ServiceConnect Platform. All rights reserved.</p>
-          <div className="flex gap-8 text-white/50 text-sm font-medium">
-            <a href="#" className="hover:text-white transition-colors">Twitter</a>
-            <a href="#" className="hover:text-white transition-colors">Instagram</a>
-            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+        <div className="max-w-[1400px] mx-auto px-6 mt-20 pt-10 border-t border-sky-100/70 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-slate-500 text-sm">© 2026 ServiceConnect Platform. All rights reserved.</p>
+          <div className="flex gap-8 text-slate-500 text-sm font-medium">
+            <a href="#" className="hover:text-slate-900 transition-colors">Twitter</a>
+            <a href="#" className="hover:text-slate-900 transition-colors">Instagram</a>
+            <a href="#" className="hover:text-slate-900 transition-colors">LinkedIn</a>
           </div>
         </div>
       </footer>

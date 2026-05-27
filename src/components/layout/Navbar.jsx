@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Menu, X, Bell, LayoutGrid, Zap, Sparkles, ChevronDown, Bookmark, Share2, ChevronsUpDown, Navigation, ShoppingCart } from 'lucide-react';
+import { Search, MapPin, Menu, X, Bell, LayoutGrid, Zap, Sparkles, ChevronDown, Bookmark, Share2, ChevronsUpDown, Navigation, ShoppingCart, Globe, Phone } from 'lucide-react';
 import { ALL_CITIES } from '../../data/cities';
 import Button from '../common/Button';
 import { cn } from '../../utils/cn';
@@ -158,13 +158,152 @@ const Navbar = ({ onSearch }) => {
 
   const showGlassyNav = true; // Always show glassy for consistency across swapped sections
 
+  const isB2BDetailsPage = pathname.match(/\/category\/[^/]+\/[^/]+/) || pathname.includes('/hotel/');
+
+  if (isB2BDetailsPage) {
+    const b2bLinks = [
+      { label: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+      { label: 'About Us', action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Products', action: () => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Services', action: () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Franchise Opportunity', action: () => document.getElementById('franchise')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Future Plans', action: () => document.getElementById('future-plans')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Trade Feed', action: () => document.getElementById('trade-feed')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Contact Us', action: () => document.getElementById('inquiryForm')?.scrollIntoView({ behavior: 'smooth' }) },
+    ];
+
+    return (
+      <nav className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-slate-100 shadow-sm py-3 transition-all duration-300">
+        <style dangerouslySetInnerHTML={{ __html: `
+          .b2b-theme-text { color: #da3332 !important; }
+          .b2b-theme-bg { background-color: #da3332 !important; }
+          .b2b-theme-border { border-color: #da3332 !important; }
+          .b2b-theme-hover-text:hover { color: #da3332 !important; }
+          .b2b-theme-hover-bg:hover { background-color: #da3332 !important; color: white !important; }
+          .b2b-theme-hover-border:hover { border-color: #da3332 !important; }
+        ` }} />
+        <div className="max-w-[1500px] w-full mx-auto px-4 md:px-8 flex items-center justify-between gap-4">
+          
+          {/* Logo (ServiceConnect B2B version) */}
+          <div onClick={() => navigate('/')} className="flex items-center gap-2 md:gap-3 cursor-pointer group shrink-0">
+            <div className="w-9 h-9 md:w-10 md:h-10 b2b-theme-bg rounded-full flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+              <Globe size={18} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm md:text-lg font-black tracking-tight text-slate-900 uppercase">
+                Service<span className="b2b-theme-text">Connect</span>
+              </span>
+              <span className="hidden sm:block text-[8px] text-slate-400 font-medium tracking-widest uppercase -mt-0.5">
+                Services, Products & B2B Solutions Provider
+              </span>
+            </div>
+          </div>
+
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-6">
+            {b2bLinks.map((link, idx) => (
+              <button 
+                key={idx}
+                onClick={link.action}
+                className="text-xs font-bold text-slate-600 b2b-theme-hover-text transition-colors py-2 relative group"
+              >
+                {link.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 b2b-theme-bg transition-all duration-300 group-hover:w-full" />
+              </button>
+            ))}
+          </div>
+
+          {/* Right Buttons */}
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            <button 
+              onClick={() => document.getElementById('inquiryForm')?.scrollIntoView({ behavior: 'smooth' })}
+              className="hidden md:flex items-center gap-1.5 border-2 border-[#25d366] text-[#25d366] font-black px-4 py-2 rounded-lg text-xs uppercase tracking-wider hover:bg-green-50/50 transition-all transform active:scale-95"
+            >
+              <Phone size={13} /> Get Quote
+            </button>
+            <button 
+              onClick={() => document.getElementById('inquiryForm')?.scrollIntoView({ behavior: 'smooth' })}
+              className="hidden sm:flex bg-[#25d366] hover:bg-[#20ba5a] text-white font-black px-4 py-2 rounded-lg items-center gap-2 text-xs uppercase tracking-wider shadow-md transition-all transform active:scale-95"
+            >
+              <Phone size={13} fill="currentColor" /> Contact Us
+            </button>
+            
+            {/* Mobile Contact Icon (Visible only on smallest mobile screens) */}
+            <button 
+              onClick={() => document.getElementById('inquiryForm')?.scrollIntoView({ behavior: 'smooth' })}
+              className="sm:hidden bg-[#25d366] hover:bg-[#20ba5a] text-white p-2.5 rounded-lg flex items-center justify-center shadow-md transition-all transform active:scale-95"
+              title="Contact Us"
+            >
+              <Phone size={15} fill="currentColor" />
+            </button>
+            
+            {/* Mobile/Tablet Menu Button */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+            >
+              <Menu size={22} />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile/Tablet B2B Drawer Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="fixed inset-0 bg-slate-950/45 backdrop-blur-sm z-[200]"
+              />
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed top-0 right-0 h-screen w-[320px] bg-white z-[210] shadow-2xl flex flex-col pt-16 px-6"
+              >
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="absolute top-6 left-6 p-2 rounded-xl text-slate-400 hover:bg-slate-50 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+
+                <div className="flex flex-col gap-6 mt-8">
+                  {b2bLinks.map((link, idx) => (
+                    <button 
+                      key={idx}
+                      onClick={() => { link.action(); setIsMobileMenuOpen(false); }}
+                      className="text-left py-2.5 border-b border-slate-50 text-sm font-bold text-slate-700 b2b-theme-hover-text transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  ))}
+                  <button 
+                    onClick={() => { document.getElementById('inquiryForm')?.scrollIntoView({ behavior: 'smooth' }); setIsMobileMenuOpen(false); }}
+                    className="w-full text-center border-2 b2b-theme-border b2b-theme-text font-black py-3 rounded-xl text-xs uppercase tracking-wider hover:bg-slate-50 transition-all mt-4"
+                  >
+                    Get Quote
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </nav>
+    );
+  }
+
   return (
     <nav className={cn(
       'fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b',
       showGlassyNav ? 'bg-[#FFF9D6]/90 backdrop-blur-xl border-yellow-200/60 pt-8 pb-3 md:py-2 shadow-md shadow-yellow-900/5' : 'bg-transparent border-transparent py-3',
       (pathname === '/' || pathname === '/services' || pathname === '/profile') ? 'md:block hidden' : 'block'
     )}>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-6 flex items-center justify-between gap-4">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-6 flex items-center justify-between gap-4">
         {/* Logo (Desktop) / Location (Mobile) */}
         <div onClick={() => navigate('/')} className="flex items-center gap-2 flex-shrink-0 cursor-pointer group">
           <div className="flex items-center gap-2">
